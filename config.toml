@@ -1,7 +1,7 @@
 baseURL = "http://tangda.me/"
 languageCode = "en-us"
 title = "YazhouTang"
-theme = "github.com/athul/archie"
+theme = "archie"
 copyright = "© Yazhou Tang"
 
 # Code Highlight
