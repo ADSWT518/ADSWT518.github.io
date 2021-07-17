@@ -1,0 +1,59 @@
+baseURL = "http://tangda.me/"
+languageCode = "en-us"
+title = "YazhouTang"
+theme = "archie"
+copyright = "© Yazhou Tang"
+
+# Code Highlight
+pygmentsstyle = "colorful"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+# paginate=3 # articles per page
+
+enableemoji = true
+
+[params]
+	mode="light" # color-mode → light,dark or auto
+	useCDN=false # don't use CDNs for fonts and icons, instead serve them locally.
+	subtitle = "欢迎来到我的个人网站！这里有一些记录和思考。"
+
+
+# Social Tags
+
+[[params.social]]
+name = "Github"
+icon = "github"
+url = "https://github.com/ADSWT518/"
+
+[[params.social]]
+name = "Twitter"
+icon = "twitter"
+url = "https://twitter.com/AndrewTang518"
+
+# Main menu Items
+
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All posts"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "About"
+url = "/about"
+weight = 3
+
+[[menu.main]]
+name = "Tags"
+url = "/tags"
+weight = 4
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
