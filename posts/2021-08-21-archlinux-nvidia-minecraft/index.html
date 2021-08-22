@@ -1,0 +1,134 @@
+<!doctype html><html><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge"><title>Archlinux下的Nvidia驱动，以及MineCraft - YazhouTang</title><meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="在arch的双显卡笔记本中使用Nvidia显卡运行MineCraft！">
+<meta property="og:image" content>
+<meta property="og:title" content="Archlinux下的Nvidia驱动，以及MineCraft">
+<meta property="og:description" content="在arch的双显卡笔记本中使用Nvidia显卡运行MineCraft！">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.tangda.me/posts/2021-08-21-archlinux-nvidia-minecraft/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-08-21T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-08-21T00:00:00+00:00">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Archlinux下的Nvidia驱动，以及MineCraft">
+<meta name=twitter:description content="在arch的双显卡笔记本中使用Nvidia显卡运行MineCraft！">
+<script src=https://www.tangda.me/js/feather.min.js></script>
+<link href=https://www.tangda.me/css/fonts.b685ac6f654695232de7b82a9143a46f9e049c8e3af3a21d9737b01f4be211d1.css rel=stylesheet>
+<link rel=stylesheet type=text/css media=screen href=https://www.tangda.me/css/main.2f9b5946627215dc1ae7fa5f82bfc9cfcab000329136befeea5733f21e77d68f.css>
+</head>
+<body>
+<div class=content><header>
+<div class=main>
+<a href=https://www.tangda.me/>YazhouTang</a>
+</div>
+<nav>
+<a href=/>Home</a>
+<a href=/posts>All posts</a>
+<a href=/about>About</a>
+<a href=/tags>Tags</a>
+</nav>
+</header>
+<main>
+<article>
+<div class=title>
+<h1 class=title>Archlinux下的Nvidia驱动，以及MineCraft</h1>
+<div class=meta>Posted on Aug 21, 2021</div>
+</div>
+<section class=body>
+<h2 id=起因与正文无关>起因（与正文无关）</h2>
+<p>今天上午在图书馆学习红黑树的时候开起了小差，想看看aur上最受欢迎的都是哪些软件。然后突然发现了一个<a href=https://aur.archlinux.org/packages/minecraft-launcher/>minecraft-launcher</a>的包，于是就下载下来准备试一试。</p>
+<p>结果发现这是正版启动器qwq想起来我初中时候最开始还是通过第三方启动器（也就是盗版）接触到MC的（当时的版本似乎是1.6.4左右？）当时听说MineCraft的开发者Notch表示：“Just pirate it. If you still like it when you can afford it in the future, buy it then. Also don&rsquo;t forget to feel bad.”<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>于是心想自己长大后一定要买一份正版。虽然现在还并没有经济独立，不过拿结余的生活费买下当年的梦想，也挺好的hhh于是就入手了一个Java版 😆</p>
+<p>不过想了想，在图书馆玩游戏还是不太好。于是晚上就提前回去了，准备体验一下正版的感受（居然已经到了1.17.1）</p>
+<p>结果打开之后发现非常卡，这才想起来，我没有安装电脑的独显驱动 😰 刚装好arch的时候尝试过安装，结果给我整黑屏了好几次，遂放弃 😂 但是为了能玩到正常的MC，今天决定再折腾一下！</p>
+<h2 id=正常安装>正常安装</h2>
+<p>这里我选择的是Nvidia闭源驱动+PRIME的双显卡解决方案，参考了网上找到的博客文章<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>。首先安装Intel的显卡驱动，不过我早就装过了。注意<code>lib32-mesa</code>这个包需要开启<code>multilib</code>仓库。</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S mesa lib32-mesa
+</code></pre></div><p>然后安装Nvidia闭源驱动，注意<code>lib32-nvidia-utils</code>这个包需要开启<code>multilib</code>仓库。</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S nvidia lib32-nvidia-utils
+</code></pre></div><p>接着安装<code>nvidia-prime</code></p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S nvidia-prime
+</code></pre></div><p>然后重启，就可以了！之后如果需要用到独显，就在命令前增加一个<code>prime-run</code>就可以了。还可以通过以下命令来检测是否成功：</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> ~  prime-run glxinfo | grep <span style=background-color:#fff0f0>&#34;OpenGL renderer&#34;</span>
+OpenGL renderer string: NVIDIA GeForce MX250/PCIe/SSE2
+</code></pre></div><h2 id=问题与解决>问题与解决</h2>
+<p>于是我马上运行</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>prime-run minecraft-launcher
+</code></pre></div><p>已经迫不及待想开始游戏了！</p>
+<p>结果点击开始游戏后，加载了一会就崩溃了，“<strong>一个未知的错误导致了游戏崩溃</strong>” 😭</p>
+<p>同时，我还注意到，在运行<code>xrandr --listproviders</code>的时候，本来会返回两个显卡的结果，但是此时只有集成显卡！独显好像没有被<code>xrandr</code>检测到！于是我从这一点出发，在arch的bbs上查到了一个帖子<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>，解决了问题。出现问题的原因是，在系统启动时，nvidia 内核模块在显示管理器之后才加载。由<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>和<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>可知</p>
+<ol>
+<li>
+<p>首先修改<code>/etc/mkinitcpio.conf</code>，将<code>nvidia</code>加入到<code>MODULES=()</code>中。</p>
+</li>
+<li>
+<p>然后运行</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mkinitcpio -P
+</code></pre></div><p>每次更新了Nvidia驱动之后都需要运行一次，因此可以使用Pacman Hooks来自动化这一过程。创建新文件<code>/etc/pacman.d/hooks/nvidia.hook</code>，并写入如下内容：</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#333>[</span>Trigger<span style=color:#333>]</span>
+<span style=color:#963>Operation</span><span style=color:#333>=</span>Install
+<span style=color:#963>Operation</span><span style=color:#333>=</span>Upgrade
+<span style=color:#963>Operation</span><span style=color:#333>=</span>Remove
+<span style=color:#963>Type</span><span style=color:#333>=</span>Package
+<span style=color:#963>Target</span><span style=color:#333>=</span>nvidia
+<span style=color:#963>Target</span><span style=color:#333>=</span>linux
+<span style=color:#888># Change the linux part above and in the Exec line if a different kernel is used</span>
+
+<span style=color:#333>[</span>Action<span style=color:#333>]</span>
+<span style=color:#963>Description</span><span style=color:#333>=</span>Update Nvidia module in initcpio
+<span style=color:#963>Depends</span><span style=color:#333>=</span>mkinitcpio
+<span style=color:#963>When</span><span style=color:#333>=</span>PostTransaction
+NeedsTargets
+<span style=color:#963>Exec</span><span style=color:#333>=</span>/bin/sh -c <span style=background-color:#fff0f0>&#39;while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P&#39;</span>
+</code></pre></div></li>
+<li>
+<p>接着在<code>/etc/default/grub</code>的<code>GRUB_CMDLINE_LINUX_DEFAULT</code>中添加<code>nvidia-drm.modeset=1</code>的内核参数，再重新运行</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre></div><p>来生成<code>grub.cfg</code>文件。</p>
+</li>
+<li>
+<p>重启电脑，然后就可以了！</p>
+</li>
+</ol>
+<p>现在来运行一下<code>xrandr --listproviders</code>，一切看起来都很正常。</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> ~  xrandr --listproviders
+Providers: number : <span style=color:#60e;font-weight:700>2</span>
+Provider 0: id: 0x45 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: <span style=color:#60e;font-weight:700>3</span> outputs: <span style=color:#60e;font-weight:700>3</span> associated providers: <span style=color:#60e;font-weight:700>0</span> name:modesetting
+Provider 1: id: 0x254 cap: 0x0 crtcs: <span style=color:#60e;font-weight:700>0</span> outputs: <span style=color:#60e;font-weight:700>0</span> associated providers: <span style=color:#60e;font-weight:700>0</span> name:NVIDIA-G0
+</code></pre></div><p>最后<code>prime-run minecraft-launcher</code>，成功进入了游戏，而且完全没有卡顿了 😆 这时候风扇开始转了起来。忽然想起来自从开始用arch之后，因为没用过独显，还是第一次听到呼呼的风扇声音hhhh</p>
+<p><img src=./20210821.png alt=MineCraft!></p>
+<h2 id=参考资料>参考资料</h2>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>Notch&rsquo;s Twitter <a href=https://twitter.com/notch/status/157261795139125248>https://twitter.com/notch/status/157261795139125248</a>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>ArchLinux 下双显卡配置 <a href=https://blog.sakuya.love/archives/linuxgpu/>https://blog.sakuya.love/archives/linuxgpu/</a>&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:3 role=doc-endnote>
+<p>[SOLVED] Nvidia card fails-can&rsquo;t be detected by xrandr &ndash;listproviders <a href="https://bbs.archlinux.org/viewtopic.php?id=260976">https://bbs.archlinux.org/viewtopic.php?id=260976</a>&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:4 role=doc-endnote>
+<p>NVIDIA#DRM_kernel_mode_setting - ArchWiki <a href=https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting>https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting</a>&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</section>
+<div class=post-tags>
+<nav class="nav tags">
+<ul class=tags>
+<li><a href=/tags/archlinux>ArchLinux</a></li>
+<li><a href=/tags/minecraft>MineCraft</a></li>
+</ul>
+</nav>
+</div>
+</article>
+</main>
+<footer>
+<hr><a class=soc href=https://github.com/ADSWT518/ title=Github><i data-feather=github></i></a>|<a class=soc href=https://twitter.com/AndrewTang518 title=Twitter><i data-feather=twitter></i></a>|⚡️
+2021 © Yazhou Tang | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a>
+</footer>
+<script>feather.replace()</script></div>
+</body>
+</html>
