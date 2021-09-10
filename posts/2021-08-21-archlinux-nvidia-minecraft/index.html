@@ -42,17 +42,17 @@
 <p>结果打开之后发现非常卡，这才想起来，我没有安装电脑的独显驱动 😰 刚装好arch的时候尝试过安装，结果给我整黑屏了好几次，遂放弃 😂 但是为了能玩到正常的MC，今天决定再折腾一下！</p>
 <h2 id=正常安装>正常安装</h2>
 <p>这里我选择的是Nvidia闭源驱动+PRIME的双显卡解决方案，参考了网上找到的博客文章<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>。首先安装Intel的显卡驱动，不过我早就装过了。注意<code>lib32-mesa</code>这个包需要开启<code>multilib</code>仓库。</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S mesa lib32-mesa
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S mesa lib32-mesa
 </code></pre></div><p>然后安装Nvidia闭源驱动，注意<code>lib32-nvidia-utils</code>这个包需要开启<code>multilib</code>仓库。</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S nvidia lib32-nvidia-utils
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S nvidia lib32-nvidia-utils
 </code></pre></div><p>接着安装<code>nvidia-prime</code></p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S nvidia-prime
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>pacman -S nvidia-prime
 </code></pre></div><p>然后重启，就可以了！之后如果需要用到独显，就在命令前增加一个<code>prime-run</code>就可以了。还可以通过以下命令来检测是否成功：</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> ~  prime-run glxinfo | grep <span style=background-color:#fff0f0>&#34;OpenGL renderer&#34;</span>
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> ~  prime-run glxinfo | grep <span style=color:#2aa198>&#34;OpenGL renderer&#34;</span>
 OpenGL renderer string: NVIDIA GeForce MX250/PCIe/SSE2
 </code></pre></div><h2 id=问题与解决>问题与解决</h2>
 <p>于是我马上运行</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>prime-run minecraft-launcher
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>prime-run minecraft-launcher
 </code></pre></div><p>已经迫不及待想开始游戏了！</p>
 <p>结果点击开始游戏后，加载了一会就崩溃了，“<strong>一个未知的错误导致了游戏崩溃</strong>” 😭</p>
 <p>同时，我还注意到，在运行<code>xrandr --listproviders</code>的时候，本来会返回两个显卡的结果，但是此时只有集成显卡！独显好像没有被<code>xrandr</code>检测到！于是我从这一点出发，在arch的bbs上查到了一个帖子<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>，解决了问题。出现问题的原因是，在系统启动时，nvidia 内核模块在显示管理器之后才加载。由<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>和<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>可知</p>
@@ -62,27 +62,27 @@ OpenGL renderer string: NVIDIA GeForce MX250/PCIe/SSE2
 </li>
 <li>
 <p>然后运行</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mkinitcpio -P
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mkinitcpio -P
 </code></pre></div><p>每次更新了Nvidia驱动之后都需要运行一次，因此可以使用Pacman Hooks来自动化这一过程。创建新文件<code>/etc/pacman.d/hooks/nvidia.hook</code>，并写入如下内容：</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#333>[</span>Trigger<span style=color:#333>]</span>
-<span style=color:#963>Operation</span><span style=color:#333>=</span>Install
-<span style=color:#963>Operation</span><span style=color:#333>=</span>Upgrade
-<span style=color:#963>Operation</span><span style=color:#333>=</span>Remove
-<span style=color:#963>Type</span><span style=color:#333>=</span>Package
-<span style=color:#963>Target</span><span style=color:#333>=</span>nvidia
-<span style=color:#963>Target</span><span style=color:#333>=</span>linux
-<span style=color:#888># Change the linux part above and in the Exec line if a different kernel is used</span>
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>[Trigger]
+<span style=color:#268bd2>Operation</span>=Install
+<span style=color:#268bd2>Operation</span>=Upgrade
+<span style=color:#268bd2>Operation</span>=Remove
+<span style=color:#268bd2>Type</span>=Package
+<span style=color:#268bd2>Target</span>=nvidia
+<span style=color:#268bd2>Target</span>=linux
+<span style=color:#93a1a1;font-style:italic># Change the linux part above and in the Exec line if a different kernel is used</span>
 
-<span style=color:#333>[</span>Action<span style=color:#333>]</span>
-<span style=color:#963>Description</span><span style=color:#333>=</span>Update Nvidia module in initcpio
-<span style=color:#963>Depends</span><span style=color:#333>=</span>mkinitcpio
-<span style=color:#963>When</span><span style=color:#333>=</span>PostTransaction
+[Action]
+<span style=color:#268bd2>Description</span>=Update Nvidia module in initcpio
+<span style=color:#268bd2>Depends</span>=mkinitcpio
+<span style=color:#268bd2>When</span>=PostTransaction
 NeedsTargets
-<span style=color:#963>Exec</span><span style=color:#333>=</span>/bin/sh -c <span style=background-color:#fff0f0>&#39;while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P&#39;</span>
+<span style=color:#268bd2>Exec</span>=/bin/sh -c <span style=color:#2aa198>&#39;while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P&#39;</span>
 </code></pre></div></li>
 <li>
 <p>接着在<code>/etc/default/grub</code>的<code>GRUB_CMDLINE_LINUX_DEFAULT</code>中添加<code>nvidia-drm.modeset=1</code>的内核参数，再重新运行</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo grub-mkconfig -o /boot/grub/grub.cfg
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo grub-mkconfig -o /boot/grub/grub.cfg
 </code></pre></div><p>来生成<code>grub.cfg</code>文件。</p>
 </li>
 <li>
@@ -90,13 +90,12 @@ NeedsTargets
 </li>
 </ol>
 <p>现在来运行一下<code>xrandr --listproviders</code>，一切看起来都很正常。</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> ~  xrandr --listproviders
-Providers: number : <span style=color:#60e;font-weight:700>2</span>
-Provider 0: id: 0x45 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: <span style=color:#60e;font-weight:700>3</span> outputs: <span style=color:#60e;font-weight:700>3</span> associated providers: <span style=color:#60e;font-weight:700>0</span> name:modesetting
-Provider 1: id: 0x254 cap: 0x0 crtcs: <span style=color:#60e;font-weight:700>0</span> outputs: <span style=color:#60e;font-weight:700>0</span> associated providers: <span style=color:#60e;font-weight:700>0</span> name:NVIDIA-G0
+<div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> ~  xrandr --listproviders
+Providers: number : <span style=color:#2aa198;font-weight:700>2</span>
+Provider 0: id: 0x45 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: <span style=color:#2aa198;font-weight:700>3</span> outputs: <span style=color:#2aa198;font-weight:700>3</span> associated providers: <span style=color:#2aa198;font-weight:700>0</span> name:modesetting
+Provider 1: id: 0x254 cap: 0x0 crtcs: <span style=color:#2aa198;font-weight:700>0</span> outputs: <span style=color:#2aa198;font-weight:700>0</span> associated providers: <span style=color:#2aa198;font-weight:700>0</span> name:NVIDIA-G0
 </code></pre></div><p>最后<code>prime-run minecraft-launcher</code>，成功进入了游戏，而且完全没有卡顿了 😆 这时候风扇开始转了起来。忽然想起来自从开始用arch之后，因为没用过独显，还是第一次听到呼呼的风扇声音hhhh</p>
 <p><img src=./20210821.png alt=MineCraft!></p>
-<h2 id=参考资料>参考资料</h2>
 <section class=footnotes role=doc-endnotes>
 <hr>
 <ol>
