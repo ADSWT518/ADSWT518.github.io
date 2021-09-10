@@ -16,14 +16,14 @@ tags: [ArchLinux]
 我的grub界面是有中文的，但是主题默认的字体是Dejavu Sans，不包含中文。因此我需要自定义字体，大概有如下几个步骤：
 
 1. 找到自己喜欢的字体，我这里选择的是微软雅黑，使用Win10自带的`msyh.ttc`。这个`.ttc`文件是Microsoft YaHei和Microsoft YaHei UI两种字体的打包。
-2. 使用`grub-mkfont`指令，将其转化为grub可用的`.pf2`格式。但是这里对字体的原格式有要求。于是我找了个小工具，从`msyh.ttc`中提取出了两个`.ttf`文件，然后对Microsoft YaHei字体对应的`.ttf`文件进行转化。同时也需要注意设置好字体的大小。
+2. 使用`grub-mkfont`指令，将其转化为grub可用的`.pf2`格式。但是这里对字体的原格式有要求[^1]。于是我找了个小工具，从`msyh.ttc`中提取出了两个`.ttf`文件，然后对Microsoft YaHei字体对应的`.ttf`文件进行转化。同时也需要注意设置好字体的大小。
 
     ```bash
     grub-mkfont -s 32 -o msyh_32.pf2 msyh.ttf
     ```
 
 3. 将得到的字体放入主题所在的文件夹`/usr/share/grub/themes/[主题名]`。
-4. 修改`theme.txt`，将`item_font`改成该字体的**全称**和大小。[^1] 然后再用`grub_mkconfig`生成配置文件并重启就好了。
+4. 修改`theme.txt`，将`item_font`改成该字体的**全称**和大小[^1]。然后再用`grub_mkconfig`生成配置文件并重启就好了。
 
    这里的“**全称**和大小”，我一开始填写的是`Microsoft YaHei 32`，然后发现grub找不到这个字体，查了半天资料也没啥头绪 :broken_heart: 最后把它改成`Microsoft YaHei Regular 32`，就正常了 :sob:
 
