@@ -45,14 +45,14 @@
 <p>找到自己喜欢的字体，我这里选择的是微软雅黑，使用Win10自带的<code>msyh.ttc</code>。这个<code>.ttc</code>文件是Microsoft YaHei和Microsoft YaHei UI两种字体的打包。</p>
 </li>
 <li>
-<p>使用<code>grub-mkfont</code>指令，将其转化为grub可用的<code>.pf2</code>格式。但是这里对字体的原格式有要求。于是我找了个小工具，从<code>msyh.ttc</code>中提取出了两个<code>.ttf</code>文件，然后对Microsoft YaHei字体对应的<code>.ttf</code>文件进行转化。同时也需要注意设置好字体的大小。</p>
+<p>使用<code>grub-mkfont</code>指令，将其转化为grub可用的<code>.pf2</code>格式。但是这里对字体的原格式有要求<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>。于是我找了个小工具，从<code>msyh.ttc</code>中提取出了两个<code>.ttf</code>文件，然后对Microsoft YaHei字体对应的<code>.ttf</code>文件进行转化。同时也需要注意设置好字体的大小。</p>
 <div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>grub-mkfont -s <span style=color:#2aa198;font-weight:700>32</span> -o msyh_32.pf2 msyh.ttf
 </code></pre></div></li>
 <li>
 <p>将得到的字体放入主题所在的文件夹<code>/usr/share/grub/themes/[主题名]</code>。</p>
 </li>
 <li>
-<p>修改<code>theme.txt</code>，将<code>item_font</code>改成该字体的<strong>全称</strong>和大小。<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> 然后再用<code>grub_mkconfig</code>生成配置文件并重启就好了。</p>
+<p>修改<code>theme.txt</code>，将<code>item_font</code>改成该字体的<strong>全称</strong>和大小<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>。然后再用<code>grub_mkconfig</code>生成配置文件并重启就好了。</p>
 <p>这里的“<strong>全称</strong>和大小”，我一开始填写的是<code>Microsoft YaHei 32</code>，然后发现grub找不到这个字体，查了半天资料也没啥头绪 💔 最后把它改成<code>Microsoft YaHei Regular 32</code>，就正常了 😭</p>
 </li>
 </ol>

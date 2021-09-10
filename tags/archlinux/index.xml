@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ArchLinux on YazhouTang</title><link>https://www.tangda.me/tags/archlinux/</link><description>Recent content in ArchLinux on YazhouTang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Fri, 10 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/archlinux/index.xml" rel="self" type="application/rss+xml"/><item><title>美化grub启动界面</title><link>https://www.tangda.me/posts/2021-09-10-beautify-my-grub/</link><pubDate>Fri, 10 Sep 2021 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2021-09-10-beautify-my-grub/</guid><description>正常步骤 觉得grub界面太丑想要美化一下-&amp;gt;搜索到喜欢的主题（我用的是Vinceliuice大佬制作的Vimix）-&amp;gt;进行安装完成美化
 出现问题 中文字体 我的grub界面是有中文的，但是主题默认的字体是Dejavu Sans，不包含中文。因此我需要自定义字体，大概有如下几个步骤：
 找到自己喜欢的字体，我这里选择的是微软雅黑，使用Win10自带的msyh.ttc。这个.ttc文件是Microsoft YaHei和Microsoft YaHei UI两种字体的打包。
-使用grub-mkfont指令，将其转化为grub可用的.pf2格式。但是这里对字体的原格式有要求。于是我找了个小工具，从msyh.ttc中提取出了两个.ttf文件，然后对Microsoft YaHei字体对应的.ttf文件进行转化。同时也需要注意设置好字体的大小。
+使用grub-mkfont指令，将其转化为grub可用的.pf2格式。但是这里对字体的原格式有要求1。于是我找了个小工具，从msyh.ttc中提取出了两个.ttf文件，然后对Microsoft YaHei字体对应的.ttf文件进行转化。同时也需要注意设置好字体的大小。
 grub-mkfont -s 32 -o msyh_32.pf2 msyh.ttf 将得到的字体放入主题所在的文件夹/usr/share/grub/themes/[主题名]。
-修改theme.txt，将item_font改成该字体的全称和大小。1 然后再用grub_mkconfig生成配置文件并重启就好了。
+修改theme.txt，将item_font改成该字体的全称和大小1。然后再用grub_mkconfig生成配置文件并重启就好了。
 这里的“全称和大小”，我一开始填写的是Microsoft YaHei 32，然后发现grub找不到这个字体，查了半天资料也没啥头绪 💔 最后把它改成Microsoft YaHei Regular 32，就正常了 😭
 自定义icon 折腾好字体后，我发现启动界面的4个选项中，“ArchLinux高级启动”和“UEFI”这两个选项是没有icon的。我根据2和3这两个Issue解决了问题。
 首先去3中下载这位用户制作的图标，并且命名为submenu.png，放入/usr/share/grub/themes/[主题名]/icons。（这个图标用于高级启动，而下载的主题中提供了UEFI的图标）
