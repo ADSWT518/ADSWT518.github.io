@@ -107,9 +107,7 @@ Provider 1: id: 0x254 cap: 0x0 crtcs: 0 outputs: 0 associated providers: 0 name:
 
 ![MineCraft!](./20210821.png)
 
-## 参考资料
-
-[^1]: Notch's Twitter https://twitter.com/notch/status/157261795139125248
-[^2]: ArchLinux 下双显卡配置 https://blog.sakuya.love/archives/linuxgpu/
-[^3]: [SOLVED] Nvidia card fails-can't be detected by xrandr --listproviders https://bbs.archlinux.org/viewtopic.php?id=260976
-[^4]: NVIDIA#DRM_kernel_mode_setting - ArchWiki https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting
+[^1]: Notch's Twitter <https://twitter.com/notch/status/157261795139125248>
+[^2]: ArchLinux 下双显卡配置 <https://blog.sakuya.love/archives/linuxgpu/>
+[^3]: [SOLVED] Nvidia card fails-can't be detected by xrandr --listproviders <https://bbs.archlinux.org/viewtopic.php?id=260976>
+[^4]: NVIDIA#DRM_kernel_mode_setting - ArchWiki <https://wiki.archlinux.org/title/NVIDIA#DRM_kernel_mode_setting>

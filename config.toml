@@ -5,7 +5,7 @@ theme = "archie"
 copyright = "© Yazhou Tang"
 
 # Code Highlight
-pygmentsstyle = "colorful"
+pygmentsstyle = "solarized-light"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
