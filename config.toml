@@ -14,12 +14,18 @@ pygmentscodefencesguesssyntax = true
 enableemoji = true
 
 [params]
-	mode="light" # color-mode → light,dark or auto
+  favicon="https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png"
+	mode="auto" # color-mode → light,dark or auto
 	useCDN=false # don't use CDNs for fonts and icons, instead serve them locally.
 	subtitle = "欢迎来到我的个人网站！这里有一些记录和思考。"
 
 
 # Social Tags
+
+[[params.social]]
+name = "Mail"
+icon = "mail"
+url = "mailto:tangyazhou518@outlook.com"
 
 [[params.social]]
 name = "Github"
@@ -30,6 +36,11 @@ url = "https://github.com/ADSWT518/"
 name = "Twitter"
 icon = "twitter"
 url = "https://twitter.com/AndrewTang518"
+
+[[params.icon]]
+name = "Zhihu"
+icon = "iconfont icon-zhihu"
+url = "https://www.zhihu.com/people/ADSWT518"
 
 # Main menu Items
 
