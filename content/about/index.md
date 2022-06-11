@@ -27,25 +27,3 @@ date: 2020-07-29
 ***
 
 我喜欢足球 :soccer: 和足球电子游戏 :video_game: 。我的主队是[巴塞罗那足球俱乐部](https://www.fcbarcelona.com/)，最喜欢的球星是[利昂内尔·梅西](https://zh.wikipedia.org/wiki/%E5%88%A9%E6%98%82%E5%86%85%E5%B0%94%C2%B7%E6%A2%85%E8%A5%BF)。
-
-<details>
-<summary>我玩过/正在玩的足球电子游戏有：</summary>
-
-移动端：
-
-* FIFA 13, FIFA 14（我心中的移动端最佳）, FIFA 15, FIFA 16, FIFA Mobile
-* Dream League Soccer
-* Top Eleven
-* PES Mobile
-* Stickman Soccer, Stickman Soccer 2014, Stickman Soccer 2016, Stickman Soccer 2018
-
-PC端：
-
-* FIFA 14, FIFA 22（目前在玩）
-* PES 2017（陪伴我度过了整个高中）, PES 2018, PES 2019
-* Football Manager 2020（目前在玩）
-* FIFA Online 3
-
-我不喜欢抽卡、氪金的模式，而更喜欢球员/教练生涯模式。创建一个虚拟球员并逐渐成长为超级球星，或者带领自己的球队夺得冠军，都是我所享受的。
-
-</details>
