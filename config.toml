@@ -15,7 +15,7 @@ enableemoji = true
 
 [params]
   favicon="https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png"
-	mode="auto" # color-mode → light,dark or auto
+	mode="toggle" # color-mode → light,dark or auto
 	useCDN=false # don't use CDNs for fonts and icons, instead serve them locally.
 	subtitle = "欢迎来到我的个人网站！这里有一些记录和思考。"
 
