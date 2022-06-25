@@ -36,3 +36,23 @@
        url('../fonts/ibm-plex-mono-v6-latin-500italic.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/ibm-plex-mono-v6-latin-500italic.svg#IBMPlexMono') format('svg'); /* Legacy iOS */
 }
+
+/* iconfonts */
+@font-face {
+  font-family: 'iconfont';
+  src: url('../iconfonts/iconfont.woff2?t=1656150824617') format('woff2'),
+       url('../iconfonts/iconfont.woff?t=1656150824617') format('woff'),
+       url('../iconfonts/iconfont.ttf?t=1656150824617') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zhihu:before {
+  content: "\e6ba";
+}
