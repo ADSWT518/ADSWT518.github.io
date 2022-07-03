@@ -34,7 +34,7 @@ tags: [ArchLinux]
 1. 首先去[^3]中下载这位用户制作的图标，并且命名为`submenu.png`，放入`/usr/share/grub/themes/[主题名]/icons`。（这个图标用于高级启动，而下载的主题中提供了UEFI的图标）
 2. 然后进入到`etc/grub.d`，可以看到以下几个文件
 
-    ![grub.d](./20210910-1.png)
+    ![grub.d](img/20210910-1.png)
 
 3. 其中，`10_linux`包含了ArchLinux的启动项和ArchLinux高级启动，`30_os-prober`包含了Windows的启动项，`30_uefi-firmware`包含了UEFI选项。~~其它几个不知道是干嘛的~~因此我们需要修改`10_linux`和`30_uefi-firmware`。
 
@@ -56,7 +56,7 @@ tags: [ArchLinux]
 
 ~~没啥好办法只能用手机拍屏幕了~~
 
-![finish](./20210910-2.jpg)
+![finish](img/20210910-2.jpg)
 
 [^1]: Grub2 theme / reference <http://wiki.rosalab.ru/en/index.php/Grub2_theme_/_reference#Font_name>
 [^2]: Issue 136: Icon Request: Advanced options and UEFI firmware settings <https://github.com/vinceliuice/grub2-themes/issues/136>

@@ -15,7 +15,7 @@ tags: [Negative]
 <summary>一些聊天记录</summary>
 
 
-![20201226-1](20201226-1.jpg)
+![20201226-1](img/20201226-1.jpg)
 
 </details>
 
@@ -24,7 +24,7 @@ tags: [Negative]
 <details>
 <summary>老师的回复</summary>
 
-![20201226-2](20201226-2.jpg)
+![20201226-2](img/20201226-2.jpg)
 
 </details>
 

@@ -105,7 +105,7 @@ Provider 1: id: 0x254 cap: 0x0 crtcs: 0 outputs: 0 associated providers: 0 name:
 
 最后`prime-run minecraft-launcher`，成功进入了游戏，而且完全没有卡顿了 :laughing: 这时候风扇开始转了起来。忽然想起来自从开始用arch之后，因为没用过独显，还是第一次听到呼呼的风扇声音hhhh
 
-![MineCraft!](./20210821.png)
+![MineCraft!](./img/20210821.png)
 
 [^1]: Notch's Twitter <https://twitter.com/notch/status/157261795139125248>
 [^2]: ArchLinux 下双显卡配置 <https://blog.sakuya.love/archives/linuxgpu/>
