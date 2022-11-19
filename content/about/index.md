@@ -22,7 +22,7 @@ date: 2020-07-29
 * 操作系统：ArchLinux+Windows（后者主要用于满足游戏需求）
 * 桌面环境：KDE
 * 编辑器：VS Code（正在学习使用Vim）
-* 终端：Konsole+Zsh+Powerlever10k（按照[这篇教程](https://linux.cn/article-13030-1.html)进行配置）
+* 终端：Konsole+Zsh+Powerlever10k（按照[这篇教程](https://www.insidentally.com/articles/000002/)进行配置）
 
 ***
 
