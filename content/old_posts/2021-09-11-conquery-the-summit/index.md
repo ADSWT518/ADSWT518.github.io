@@ -2,6 +2,7 @@
 title: 雄关漫道真如铁，而今迈步从头越。
 description: 谨以此文，纪念我逝去的大二生活
 date: 2021-09-11
+draft: true
 tags: [规划与思考]
 ---
 

@@ -2,6 +2,7 @@
 title: 近期感受
 description: 一些负面想法
 date: 2020-12-26
+draft: true
 tags: [Negative]
 ---
 

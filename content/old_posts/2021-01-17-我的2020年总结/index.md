@@ -2,6 +2,7 @@
 title: 我的2020年总结
 description: 失败的一年
 date: 2021-01-17
+draft: true
 tags: [规划与思考]
 ---
 
