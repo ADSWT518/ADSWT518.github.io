@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MineCraft on YazhouTang</title><link>https://www.tangda.me/tags/minecraft/</link><description>Recent content in MineCraft on YazhouTang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Sat, 21 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/minecraft/index.xml" rel="self" type="application/rss+xml"/><item><title>Archlinux下的Nvidia驱动，以及MineCraft</title><link>https://www.tangda.me/posts/2021-08-21-archlinux-nvidia-minecraft/</link><pubDate>Sat, 21 Aug 2021 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2021-08-21-archlinux-nvidia-minecraft/</guid><description>起因（与正文无关） 今天上午在图书馆学习红黑树的时候开起了小差，想看看aur上最受欢迎的都是哪些软件。然后突然发现了一个minecraft-launcher的包，于是就下载下来准备试一试。
-结果发现这是正版启动器qwq想起来我初中时候最开始还是通过第三方启动器（也就是盗版）接触到MC的（当时的版本似乎是1.6.4左右？）当时听说MineCraft的开发者Notch表示：“Just pirate it. If you still like it when you can afford it in the future, buy it then. Also don&amp;rsquo;t forget to feel bad.”1于是心想自己长大后一定要买一份正版。虽然现在还并没有经济独立，不过拿结余的生活费买下当年的梦想，也挺好的hhh于是就入手了一个Java版 😆
+结果发现这是正版启动器qwq想起来我初中时候最开始还是通过第三方启动器（也就是盗版）接触到MC的（当时的版本似乎是1.6.4左右？）当时听说MineCraft的开发者Notch表示：“Just pirate it. If you still like it when you can afford it in the future, buy it then. Also don&amp;rsquo;t forget to feel bad.”1于是心想自己长大后一定要买一份正版。虽然现在还并没有经济独立，不过拿结余的生活费买下当年的梦想，也挺好的hhh于是就入手了一个Java版 &amp;#x1f606;
 不过想了想，在图书馆玩游戏还是不太好。于是晚上就提前回去了，准备体验一下正版的感受（居然已经到了1.17.1）
-结果打开之后发现非常卡，这才想起来，我没有安装电脑的独显驱动 😰 刚装好arch的时候尝试过安装，结果给我整黑屏了好几次，遂放弃 😂 但是为了能玩到正常的MC，今天决定再折腾一下！
+结果打开之后发现非常卡，这才想起来，我没有安装电脑的独显驱动 &amp;#x1f630; 刚装好arch的时候尝试过安装，结果给我整黑屏了好几次，遂放弃 &amp;#x1f602; 但是为了能玩到正常的MC，今天决定再折腾一下！
 正常安装 这里我选择的是Nvidia闭源驱动+PRIME的双显卡解决方案，参考了网上找到的博客文章2。首先安装Intel的显卡驱动，不过我早就装过了。注意lib32-mesa这个包需要开启multilib仓库。
 pacman -S mesa lib32-mesa 然后安装Nvidia闭源驱动，注意lib32-nvidia-utils这个包需要开启multilib仓库。
 pacman -S nvidia lib32-nvidia-utils 接着安装nvidia-prime
 pacman -S nvidia-prime 然后重启，就可以了！之后如果需要用到独显，就在命令前增加一个prime-run就可以了。还可以通过以下命令来检测是否成功：
 ~ prime-run glxinfo | grep &amp;#34;OpenGL renderer&amp;#34; OpenGL renderer string: NVIDIA GeForce MX250/PCIe/SSE2 问题与解决 于是我马上运行
 prime-run minecraft-launcher 已经迫不及待想开始游戏了！
-结果点击开始游戏后，加载了一会就崩溃了，“一个未知的错误导致了游戏崩溃” 😭</description></item></channel></rss>
+结果点击开始游戏后，加载了一会就崩溃了，“一个未知的错误导致了游戏崩溃” &amp;#x1f62d;</description></item></channel></rss>
