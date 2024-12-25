@@ -2,7 +2,7 @@
 title: Hello, world!
 description: 
 date: 2020-07-29
-tags: [Others]
+tags: [杂项]
 ---
 
 又鼓捣了一天的博客。终于还是基本上搞好了。
