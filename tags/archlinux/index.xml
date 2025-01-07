@@ -1,27 +1,72 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ArchLinux on YazhouTang</title><link>https://www.tangda.me/tags/archlinux/</link><description>Recent content in ArchLinux on YazhouTang</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Fri, 10 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/archlinux/index.xml" rel="self" type="application/rss+xml"/><item><title>美化grub启动界面</title><link>https://www.tangda.me/posts/2021-09-10-beautify-my-grub/</link><pubDate>Fri, 10 Sep 2021 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2021-09-10-beautify-my-grub/</guid><description>正常步骤 觉得grub界面太丑想要美化一下-&amp;gt;搜索到喜欢的主题（我用的是Vinceliuice大佬制作的Vimix）-&amp;gt;进行安装完成美化
-出现问题 中文字体 我的grub界面是有中文的，但是主题默认的字体是Dejavu Sans，不包含中文。因此我需要自定义字体，大概有如下几个步骤：
-找到自己喜欢的字体，我这里选择的是微软雅黑，使用Win10自带的msyh.ttc。这个.ttc文件是Microsoft YaHei和Microsoft YaHei UI两种字体的打包。
-使用grub-mkfont指令，将其转化为grub可用的.pf2格式。但是这里对字体的原格式有要求1。于是我找了个小工具，从msyh.ttc中提取出了两个.ttf文件，然后对Microsoft YaHei字体对应的.ttf文件进行转化。同时也需要注意设置好字体的大小。
-grub-mkfont -s 32 -o msyh_32.pf2 msyh.ttf 将得到的字体放入主题所在的文件夹/usr/share/grub/themes/[主题名]。
-修改theme.txt，将item_font改成该字体的全称和大小1。然后再用grub_mkconfig生成配置文件并重启就好了。
-这里的“全称和大小”，我一开始填写的是Microsoft YaHei 32，然后发现grub找不到这个字体，查了半天资料也没啥头绪 &amp;#x1f494; 最后把它改成Microsoft YaHei Regular 32，就正常了 &amp;#x1f62d;
-自定义icon 折腾好字体后，我发现启动界面的4个选项中，“ArchLinux高级启动”和“UEFI”这两个选项是没有icon的。我根据2和3这两个Issue解决了问题。
-首先去3中下载这位用户制作的图标，并且命名为submenu.png，放入/usr/share/grub/themes/[主题名]/icons。（这个图标用于高级启动，而下载的主题中提供了UEFI的图标）
-然后进入到etc/grub.d，可以看到以下几个文件
-其中，10_linux包含了ArchLinux的启动项和ArchLinux高级启动，30_os-prober包含了Windows的启动项，30_uefi-firmware包含了UEFI选项。其它几个不知道是干嘛的因此我们需要修改10_linux和30_uefi-firmware。
-实际上只需要给对应的启动项加上一个--class选项就可以了，这样grub就会到其使用的主题的icons文件夹中寻找名称与--class选项相同的图片。因此我们在10_linux的第286行加上--class submenu，修改好之后的这行如下：
-echo &amp;#34;submenu &amp;#39;$(gettext_printf &amp;#34;Advanced options for %s&amp;#34; &amp;#34;${OS}&amp;#34; | grub_quote)&amp;#39; --class submenu \$menuentry_id_option &amp;#39;gnulinux-advanced-$boot_device_id&amp;#39; {&amp;#34; 在30_uefi-firmware的第40行加上--class efi，修改好之后的这行如下：
-menuentry &amp;#39;$LABEL&amp;#39; --class efi \$menuentry_id_option &amp;#39;uefi-firmware&amp;#39; { 这样就可以了。
-完成图 没啥好办法只能用手机拍屏幕了
-Grub2 theme / reference http://wiki.rosalab.ru/en/index.php/Grub2_theme_/_reference#Font_name&amp;#160;&amp;#x21a9;&amp;#xfe0e;&amp;#160;&amp;#x21a9;&amp;#xfe0e;
-Issue 136: Icon Request: Advanced options and UEFI firmware settings https://github.</description></item><item><title>Archlinux下的Nvidia驱动，以及MineCraft</title><link>https://www.tangda.me/posts/2021-08-21-archlinux-nvidia-minecraft/</link><pubDate>Sat, 21 Aug 2021 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2021-08-21-archlinux-nvidia-minecraft/</guid><description>起因（与正文无关） 今天上午在图书馆学习红黑树的时候开起了小差，想看看aur上最受欢迎的都是哪些软件。然后突然发现了一个minecraft-launcher的包，于是就下载下来准备试一试。
-结果发现这是正版启动器qwq想起来我初中时候最开始还是通过第三方启动器（也就是盗版）接触到MC的（当时的版本似乎是1.6.4左右？）当时听说MineCraft的开发者Notch表示：“Just pirate it. If you still like it when you can afford it in the future, buy it then. Also don&amp;rsquo;t forget to feel bad.”1于是心想自己长大后一定要买一份正版。虽然现在还并没有经济独立，不过拿结余的生活费买下当年的梦想，也挺好的hhh于是就入手了一个Java版 &amp;#x1f606;
-不过想了想，在图书馆玩游戏还是不太好。于是晚上就提前回去了，准备体验一下正版的感受（居然已经到了1.17.1）
-结果打开之后发现非常卡，这才想起来，我没有安装电脑的独显驱动 &amp;#x1f630; 刚装好arch的时候尝试过安装，结果给我整黑屏了好几次，遂放弃 &amp;#x1f602; 但是为了能玩到正常的MC，今天决定再折腾一下！
-正常安装 这里我选择的是Nvidia闭源驱动+PRIME的双显卡解决方案，参考了网上找到的博客文章2。首先安装Intel的显卡驱动，不过我早就装过了。注意lib32-mesa这个包需要开启multilib仓库。
-pacman -S mesa lib32-mesa 然后安装Nvidia闭源驱动，注意lib32-nvidia-utils这个包需要开启multilib仓库。
-pacman -S nvidia lib32-nvidia-utils 接着安装nvidia-prime
-pacman -S nvidia-prime 然后重启，就可以了！之后如果需要用到独显，就在命令前增加一个prime-run就可以了。还可以通过以下命令来检测是否成功：
-~ prime-run glxinfo | grep &amp;#34;OpenGL renderer&amp;#34; OpenGL renderer string: NVIDIA GeForce MX250/PCIe/SSE2 问题与解决 于是我马上运行
-prime-run minecraft-launcher 已经迫不及待想开始游戏了！
-结果点击开始游戏后，加载了一会就崩溃了，“一个未知的错误导致了游戏崩溃” &amp;#x1f62d;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ArchLinux on YazhouTang</title><link>https://www.tangda.me/tags/archlinux/</link><description>Recent content in ArchLinux on YazhouTang</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Fri, 10 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/archlinux/index.xml" rel="self" type="application/rss+xml"/><item><title>美化grub启动界面</title><link>https://www.tangda.me/posts/2021-09-10-beautify-my-grub/</link><pubDate>Fri, 10 Sep 2021 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2021-09-10-beautify-my-grub/</guid><description>&lt;h2 id="正常步骤">正常步骤&lt;/h2>
+&lt;p>觉得grub界面太丑想要美化一下-&amp;gt;搜索到喜欢的主题（我用的是&lt;a href="https://github.com/vinceliuice/grub2-themes">Vinceliuice大佬制作的Vimix&lt;/a>）-&amp;gt;进行安装完成美化&lt;/p>
+&lt;h2 id="出现问题">出现问题&lt;/h2>
+&lt;h3 id="中文字体">中文字体&lt;/h3>
+&lt;p>我的grub界面是有中文的，但是主题默认的字体是Dejavu Sans，不包含中文。因此我需要自定义字体，大概有如下几个步骤：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>找到自己喜欢的字体，我这里选择的是微软雅黑，使用Win10自带的&lt;code>msyh.ttc&lt;/code>。这个&lt;code>.ttc&lt;/code>文件是Microsoft YaHei和Microsoft YaHei UI两种字体的打包。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>使用&lt;code>grub-mkfont&lt;/code>指令，将其转化为grub可用的&lt;code>.pf2&lt;/code>格式。但是这里对字体的原格式有要求&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>。于是我找了个小工具，从&lt;code>msyh.ttc&lt;/code>中提取出了两个&lt;code>.ttf&lt;/code>文件，然后对Microsoft YaHei字体对应的&lt;code>.ttf&lt;/code>文件进行转化。同时也需要注意设置好字体的大小。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>grub-mkfont -s &lt;span style="color:#2aa198;font-weight:bold">32&lt;/span> -o msyh_32.pf2 msyh.ttf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>将得到的字体放入主题所在的文件夹&lt;code>/usr/share/grub/themes/[主题名]&lt;/code>。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>修改&lt;code>theme.txt&lt;/code>，将&lt;code>item_font&lt;/code>改成该字体的&lt;strong>全称&lt;/strong>和大小&lt;sup id="fnref1:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>。然后再用&lt;code>grub_mkconfig&lt;/code>生成配置文件并重启就好了。&lt;/p>
+&lt;p>这里的“&lt;strong>全称&lt;/strong>和大小”，我一开始填写的是&lt;code>Microsoft YaHei 32&lt;/code>，然后发现grub找不到这个字体，查了半天资料也没啥头绪 &amp;#x1f494; 最后把它改成&lt;code>Microsoft YaHei Regular 32&lt;/code>，就正常了 &amp;#x1f62d;&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="自定义icon">自定义icon&lt;/h3>
+&lt;p>折腾好字体后，我发现启动界面的4个选项中，“ArchLinux高级启动”和“UEFI”这两个选项是没有icon的。我根据&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>和&lt;sup id="fnref:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>这两个Issue解决了问题。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>首先去&lt;sup id="fnref1:3">&lt;a href="#fn:3" class="footnote-ref" role="doc-noteref">3&lt;/a>&lt;/sup>中下载这位用户制作的图标，并且命名为&lt;code>submenu.png&lt;/code>，放入&lt;code>/usr/share/grub/themes/[主题名]/icons&lt;/code>。（这个图标用于高级启动，而下载的主题中提供了UEFI的图标）&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>然后进入到&lt;code>etc/grub.d&lt;/code>，可以看到以下几个文件&lt;/p>
+&lt;p>&lt;img src="img/20210910-1.png" alt="grub.d">&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>其中，&lt;code>10_linux&lt;/code>包含了ArchLinux的启动项和ArchLinux高级启动，&lt;code>30_os-prober&lt;/code>包含了Windows的启动项，&lt;code>30_uefi-firmware&lt;/code>包含了UEFI选项。&lt;del>其它几个不知道是干嘛的&lt;/del>因此我们需要修改&lt;code>10_linux&lt;/code>和&lt;code>30_uefi-firmware&lt;/code>。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>实际上只需要给对应的启动项加上一个&lt;code>--class&lt;/code>选项就可以了，这样grub就会到其使用的主题的icons文件夹中寻找名称与&lt;code>--class&lt;/code>选项相同的图片。因此我们在&lt;code>10_linux&lt;/code>的第286行加上&lt;code>--class submenu&lt;/code>，修改好之后的这行如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#cb4b16">echo&lt;/span> &lt;span style="color:#2aa198">&amp;#34;submenu &amp;#39;&lt;/span>&lt;span style="color:#859900">$(&lt;/span>gettext_printf &lt;span style="color:#2aa198">&amp;#34;Advanced options for %s&amp;#34;&lt;/span> &lt;span style="color:#2aa198">&amp;#34;&lt;/span>&lt;span style="color:#2aa198">${&lt;/span>&lt;span style="color:#268bd2">OS&lt;/span>&lt;span style="color:#2aa198">}&lt;/span>&lt;span style="color:#2aa198">&amp;#34;&lt;/span> | grub_quote&lt;span style="color:#859900">)&lt;/span>&lt;span style="color:#2aa198">&amp;#39; --class submenu \$menuentry_id_option &amp;#39;gnulinux-advanced-&lt;/span>&lt;span style="color:#268bd2">$boot_device_id&lt;/span>&lt;span style="color:#2aa198">&amp;#39; {&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在&lt;code>30_uefi-firmware&lt;/code>的第40行加上&lt;code>--class efi&lt;/code>，修改好之后的这行如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>menuentry &lt;span style="color:#2aa198">&amp;#39;$LABEL&amp;#39;&lt;/span> --class efi &lt;span style="color:#2aa198">\$&lt;/span>menuentry_id_option &lt;span style="color:#2aa198">&amp;#39;uefi-firmware&amp;#39;&lt;/span> {
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这样就可以了。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="完成图">完成图&lt;/h2>
+&lt;p>&lt;del>没啥好办法只能用手机拍屏幕了&lt;/del>&lt;/p>
+&lt;p>&lt;img src="img/20210910-2.jpg" alt="finish">&lt;/p>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>Grub2 theme / reference &lt;a href="http://wiki.rosalab.ru/en/index.php/Grub2_theme_/_reference#Font_name">http://wiki.rosalab.ru/en/index.php/Grub2_theme_/_reference#Font_name&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&amp;#160;&lt;a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>Issue 136: Icon Request: Advanced options and UEFI firmware settings &lt;a href="https://github.com/vinceliuice/grub2-themes/issues/136">https://github.com/vinceliuice/grub2-themes/issues/136&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p></description></item><item><title>Archlinux下的Nvidia驱动，以及MineCraft</title><link>https://www.tangda.me/posts/2021-08-21-archlinux-nvidia-minecraft/</link><pubDate>Sat, 21 Aug 2021 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2021-08-21-archlinux-nvidia-minecraft/</guid><description>&lt;h2 id="起因与正文无关">起因（与正文无关）&lt;/h2>
+&lt;p>今天上午在图书馆学习红黑树的时候开起了小差，想看看aur上最受欢迎的都是哪些软件。然后突然发现了一个&lt;a href="https://aur.archlinux.org/packages/minecraft-launcher/">minecraft-launcher&lt;/a>的包，于是就下载下来准备试一试。&lt;/p>
+&lt;p>结果发现这是正版启动器qwq想起来我初中时候最开始还是通过第三方启动器（也就是盗版）接触到MC的（当时的版本似乎是1.6.4左右？）当时听说MineCraft的开发者Notch表示：“Just pirate it. If you still like it when you can afford it in the future, buy it then. Also don&amp;rsquo;t forget to feel bad.”&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>于是心想自己长大后一定要买一份正版。虽然现在还并没有经济独立，不过拿结余的生活费买下当年的梦想，也挺好的hhh于是就入手了一个Java版 &amp;#x1f606;&lt;/p>
+&lt;p>不过想了想，在图书馆玩游戏还是不太好。于是晚上就提前回去了，准备体验一下正版的感受（居然已经到了1.17.1）&lt;/p>
+&lt;p>结果打开之后发现非常卡，这才想起来，我没有安装电脑的独显驱动 &amp;#x1f630; 刚装好arch的时候尝试过安装，结果给我整黑屏了好几次，遂放弃 &amp;#x1f602; 但是为了能玩到正常的MC，今天决定再折腾一下！&lt;/p>
+&lt;h2 id="正常安装">正常安装&lt;/h2>
+&lt;p>这里我选择的是Nvidia闭源驱动+PRIME的双显卡解决方案，参考了网上找到的博客文章&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>。首先安装Intel的显卡驱动，不过我早就装过了。注意&lt;code>lib32-mesa&lt;/code>这个包需要开启&lt;code>multilib&lt;/code>仓库。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pacman -S mesa lib32-mesa
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后安装Nvidia闭源驱动，注意&lt;code>lib32-nvidia-utils&lt;/code>这个包需要开启&lt;code>multilib&lt;/code>仓库。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pacman -S nvidia lib32-nvidia-utils
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>接着安装&lt;code>nvidia-prime&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pacman -S nvidia-prime
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后重启，就可以了！之后如果需要用到独显，就在命令前增加一个&lt;code>prime-run&lt;/code>就可以了。还可以通过以下命令来检测是否成功：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span> ~ prime-run glxinfo | grep &lt;span style="color:#2aa198">&amp;#34;OpenGL renderer&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>OpenGL renderer string: NVIDIA GeForce MX250/PCIe/SSE2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="问题与解决">问题与解决&lt;/h2>
+&lt;p>于是我马上运行&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>prime-run minecraft-launcher
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>已经迫不及待想开始游戏了！&lt;/p>
+&lt;p>结果点击开始游戏后，加载了一会就崩溃了，“&lt;strong>一个未知的错误导致了游戏崩溃&lt;/strong>” &amp;#x1f62d;&lt;/p></description></item></channel></rss>

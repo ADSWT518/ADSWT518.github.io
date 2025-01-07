@@ -138,6 +138,7 @@ header {
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 1em 0;
+  line-height: 2.5em;
 }
 
 header .main {
@@ -158,6 +159,15 @@ h6::before { color: var(--maincolor); content: '###### '; }
 .meta {
   color: #999;
   letter-spacing: -0.5px;
+}
+
+.toc {
+  background-color: #ececec;
+  color: #232333;
+  padding: 10px;
+  padding-bottom: 0;
+  border-radius: 5px;
+  display: inline-block;
 }
 
 /* Footer */
