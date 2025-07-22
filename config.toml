@@ -37,6 +37,11 @@ name = "Twitter"
 icon = "twitter"
 url = "https://twitter.com/AndrewTang518"
 
+[[params.social]]
+name = "LinkedIn"
+icon = "linkedin"
+url = "https://www.linkedin.com/in/yazhoutang/"
+
 [[params.icon]]
 name = "Zhihu"
 icon = "iconfont icon-zhihu"
