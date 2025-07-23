@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html><head lang="en">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>用Opam安装Frama-C - Yazhou Tang (唐亚周)</title><link rel="icon" type="image/png" href=https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="解决why3安装失败的问题" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="https://www.tangda.me/posts/2025-05-14-opam-install-why3/">
+  <meta property="og:site_name" content="Yazhou Tang (唐亚周)">
+  <meta property="og:title" content="用Opam安装Frama-C">
+  <meta property="og:description" content="解决why3安装失败的问题">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-05-14T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-05-14T00:00:00+00:00">
+    <meta property="article:tag" content="Opam">
+    <meta property="article:tag" content="Debug">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="用Opam安装Frama-C">
+  <meta name="twitter:description" content="解决why3安装失败的问题">
+<script src="https://www.tangda.me/js/feather.min.js"></script>
+	
+	
+        <link href="https://www.tangda.me/css/fonts.07926cba08f8aefb2b6f175d5d45dddce0fa79cabb73630dc8a28f280b8f95ff.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://www.tangda.me/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://www.tangda.me/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+
+	
+	
+
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://www.tangda.me/">Yazhou Tang (唐亚周)</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">Blog</a>
+		
+		<a href="/misc">Misc</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="https://www.tangda.me/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">用Opam安装Frama-C</h1>
+			<div class="description">
+	
+	解决why3安装失败的问题
+	
+</div>
+			<div class="meta">Posted on May 14, 2025</div>
+		</div>
+		
+
+		
+
+		<section class="body">
+			<h2 id="系统信息">系统信息</h2>
+<ul>
+<li>linux</li>
+<li>gcc 15.1.1</li>
+<li>opam 2.3.0</li>
+</ul>
+<h2 id="问题表现">问题表现</h2>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#=== ERROR while compiling why3.1.7.2 =========================================#</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># context     2.3.0 | linux/x86_64 |  | git+https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># path        ~/.opam/frama-c/.opam-switch/build/why3.1.7.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># command     ~/.opam/opam-init/hooks/sandbox.sh build make -j27 all byte</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># exit-code   2</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># env-file    ~/.opam/log/why3-234433-04074f.env</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># output-file ~/.opam/log/why3-234433-04074f.out</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">### output ###</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># src/server/cpulimit-unix.c:95:23: error: assignment to ‘__sighandler_t’ {aka ‘void (*)(int)’} from incompatible pointer type ‘void (*)(void)’ [-Wincompatible-pointer-types]</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># src/server/cpulimit-unix.c:45:6: note: ‘wallclock_timelimit_reached’ declared here</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#    45 | void wallclock_timelimit_reached() {</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#       |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># In file included from src/server/cpulimit-unix.c:22:</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># /usr/include/signal.h:72:16: note: ‘__sighandler_t’ declared here</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#    72 | typedef void (*__sighandler_t) (int);</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#       |                ^~~~~~~~~~~~~~</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># Ocamlopt src/util/weakhtbl.ml</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># make: *** [Makefile:752: src/server/cpulimit-unix.o] Error 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># make: *** Waiting for unfinished jobs....</span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"># Ocamlc   src/util/diffmap.mli</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;&gt;&lt;&gt; Error report &lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;
+</span></span><span style="display:flex;"><span>┌─ The following actions failed
+</span></span><span style="display:flex;"><span>│ λ build why3 1.7.2
+</span></span><span style="display:flex;"><span>└─
+</span></span></code></pre></div><h2 id="报错原因">报错原因</h2>
+<p>gcc版本太高</p>
+<h2 id="解决方案">解决方案</h2>
+<ol>
+<li>
+<p>首先进入到build目录</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#cb4b16">cd</span> ~/.opam/frama-c/.opam-switch/build/why3.1.7.2
+</span></span></code></pre></div></li>
+<li>
+<p>然后手动编译why3</p>
+<p>要么改Makefile，加上 <code>-Wno-incompatible-pointer-types</code></p>
+<p>要么</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#2aa198">&#39;s/void wallclock_timelimit_reached()/void wallclock_timelimit_reached(int signum)/&#39;</span> src/server/cpulimit-unix.c
+</span></span></code></pre></div></li>
+<li>
+<p>接着使用该目录下编译好的why3进行编译并安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>opam pin add why3.1.7.2 .
+</span></span></code></pre></div><p>参考：https://opam.ocaml.org/doc/Usage.html#opam-pin</p>
+</li>
+<li>
+<p>最后正常安装Frama-C就好了</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>opam install frama-c
+</span></span></code></pre></div></li>
+</ol>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/opam">Opam</a></li>
+					
+					<li><a href="/tags/debug">Debug</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2025  © Yazhou Tang |  <a 
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a> | Made with ❤️
+  </div>
+</footer>
+
+
+</div>
+    </body>
+</html>

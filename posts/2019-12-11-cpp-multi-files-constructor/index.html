@@ -1,129 +1,237 @@
-<!doctype html><html><head lang=en><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><title>程序含有多个文件时构造函数的默认值问题 - YazhouTang</title><link rel=icon type=image/png href=https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png><meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="初学C++时的一次debug记录"><meta property="og:image" content><meta property="og:url" content="https://www.tangda.me/posts/2019-12-11-cpp-multi-files-constructor/"><meta property="og:site_name" content="YazhouTang"><meta property="og:title" content="程序含有多个文件时构造函数的默认值问题"><meta property="og:description" content="初学C++时的一次debug记录"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-12-11T00:00:00+00:00"><meta property="article:modified_time" content="2019-12-11T00:00:00+00:00"><meta property="article:tag" content="C++"><meta name=twitter:card content="summary"><meta name=twitter:title content="程序含有多个文件时构造函数的默认值问题"><meta name=twitter:description content="初学C++时的一次debug记录"><script src=https://www.tangda.me/js/feather.min.js></script><script src=https://unpkg.com/@waline/client@v2/dist/waline.js></script><link href=https://unpkg.com/@waline/client@v2/dist/waline.css rel=stylesheet><link href=https://www.tangda.me/css/fonts.07926cba08f8aefb2b6f175d5d45dddce0fa79cabb73630dc8a28f280b8f95ff.css rel=stylesheet><link rel=stylesheet type=text/css media=screen href=https://www.tangda.me/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css><link id=darkModeStyle rel=stylesheet type=text/css href=https://www.tangda.me/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css disabled></head><body><div class=content><header><div class=main><a href=https://www.tangda.me/>YazhouTang</a></div><nav><a href=/>Home</a>
-<a href=/posts>All posts</a>
-<a href=/about>About</a>
-<a href=/tags>Tags</a>
-| <span id=dark-mode-toggle onclick=toggleTheme()></span>
-<script src=https://www.tangda.me/js/themetoggle.js></script></nav></header><main><article><div class=title><h1 class=title>程序含有多个文件时构造函数的默认值问题</h1><div class=meta>Posted on Dec 11, 2019</div></div><section class=body><blockquote><p>本文原载于 <a href=https://blog.csdn.net/qq_45377501/article/details/103499442>https://blog.csdn.net/qq_45377501/article/details/103499442</a> ，是大一初学C++时的一次debug记录。</p></blockquote><p>如果想在定义对象时可以指定初值也可以不指定，可以在类中设计一个带默认值的构造函数。下面这个程序：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：main.cpp
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&#34;example.h&#34;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&lt;iostream&gt;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#859900>using</span> <span style=color:#859900>namespace</span> <span style=color:#268bd2>std</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>main</span>()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>hello</span> <span style=color:#268bd2>A</span>(<span style=color:#2aa198;font-weight:700>2</span>), <span style=color:#268bd2>B</span>;
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>A</span>.<span style=color:#268bd2>print</span>();
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>B</span>.<span style=color:#268bd2>print</span>();
-</span></span><span style=display:flex><span>    <span style=color:#859900>return</span> <span style=color:#2aa198;font-weight:700>0</span>;
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：example.h
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#ifndef EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#define EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>
-</span></span><span style=display:flex><span><span style=color:#859900>class</span> <span style=color:#cb4b16>hello</span>{
-</span></span><span style=display:flex><span><span style=color:#859900>private</span>:
-</span></span><span style=display:flex><span>    <span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span><span style=color:#859900>public</span>:
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>);
-</span></span><span style=display:flex><span>    <span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>print</span>();
-</span></span><span style=display:flex><span>};
-</span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#endif </span><span style=color:#93a1a1;font-style:italic>// EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>
-</span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：example.cpp
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&#34;example.h&#34;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&lt;iostream&gt;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#859900>using</span> <span style=color:#859900>namespace</span> <span style=color:#268bd2>std</span>;
-</span></span><span style=display:flex><span><span style=color:#268bd2>hello</span>::<span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>)
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>b</span> = <span style=color:#268bd2>c</span>;
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>hello</span>::<span style=color:#268bd2>print</span>()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>cout</span> &lt;&lt;<span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>在编译时会报错：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>error: no matching <span style=color:#859900>function</span> <span style=color:#859900>for</span> call to <span style=color:#2aa198>&#39;hello::hello()&#39;</span>
-</span></span></code></pre></div><p>是因为我们定义的构造函数必须要指定初值</p><p>而如果把类的执行文件改成这样：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：example.cpp
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&#34;example.h&#34;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&lt;iostream&gt;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#859900>using</span> <span style=color:#859900>namespace</span> <span style=color:#268bd2>std</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#268bd2>hello</span>::<span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>=<span style=color:#2aa198;font-weight:700>0</span>)<span style=color:#93a1a1;font-style:italic>//加上了一个默认值
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>b</span> = <span style=color:#268bd2>c</span>;
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>hello</span>::<span style=color:#268bd2>print</span>()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>cout</span> &lt;&lt;<span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>却仍然出现了同样的错误：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>error: no matching <span style=color:#859900>function</span> <span style=color:#859900>for</span> call to <span style=color:#2aa198>&#39;hello::hello()&#39;</span>
-</span></span></code></pre></div><p>而如果不改变执行文件而改变头文件中构造函数的声明：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：example.h
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#ifndef EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#define EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>
-</span></span><span style=display:flex><span><span style=color:#859900>class</span> <span style=color:#cb4b16>hello</span>{
-</span></span><span style=display:flex><span><span style=color:#859900>private</span>:
-</span></span><span style=display:flex><span>    <span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span><span style=color:#859900>public</span>:
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>=<span style=color:#2aa198;font-weight:700>0</span>);<span style=color:#93a1a1;font-style:italic>//加上了一个默认值
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>    <span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>print</span>();
-</span></span><span style=display:flex><span>};
-</span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#endif </span><span style=color:#93a1a1;font-style:italic>// EXAMPLE_H_INCLUDED
-</span></span></span></code></pre></div><p>则编译通过</p><p>而如果执行文件和头文件的构造函数都加上默认值：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：example.h
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#ifndef EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#define EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>
-</span></span><span style=display:flex><span><span style=color:#859900>class</span> <span style=color:#cb4b16>hello</span>{
-</span></span><span style=display:flex><span><span style=color:#859900>private</span>:
-</span></span><span style=display:flex><span>    <span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span><span style=color:#859900>public</span>:
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>=<span style=color:#2aa198;font-weight:700>0</span>);<span style=color:#93a1a1;font-style:italic>//加上了一个默认值
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>    <span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>print</span>();
-</span></span><span style=display:flex><span>};
-</span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#endif </span><span style=color:#93a1a1;font-style:italic>// EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>
-</span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：example.cpp
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&#34;example.h&#34;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#include</span> <span style=color:#93a1a1;font-style:italic>&lt;iostream&gt;</span><span style=color:#93a1a1;font-style:italic>
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#859900>using</span> <span style=color:#859900>namespace</span> <span style=color:#268bd2>std</span>;
-</span></span><span style=display:flex><span><span style=color:#268bd2>hello</span>::<span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>=<span style=color:#2aa198;font-weight:700>0</span>)<span style=color:#93a1a1;font-style:italic>//加上了一个默认值
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>b</span> = <span style=color:#268bd2>c</span>;
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>hello</span>::<span style=color:#268bd2>print</span>()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>cout</span> &lt;&lt;<span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>则在编译时会报错：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>error: default argument given <span style=color:#859900>for</span> parameter <span style=color:#2aa198;font-weight:700>1</span> of <span style=color:#2aa198>&#39;hello::hello(int)&#39;</span> [-fpermissive]
-</span></span></code></pre></div><p>这是因为函数参数的默认值不可以在声明和定义时都给出</p><p>当声明和定义在同一个文件中时，默认值可以在两个地方的任意一个地方给出；可是分开成两个文件时，就只能在声明时给出了。</p><p>再做尝试，将构造函数放入头文件中：</p><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>//文件：example.h
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span><span style=color:#93a1a1;font-style:italic>#ifndef EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#define EXAMPLE_H_INCLUDED
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>
-</span></span><span style=display:flex><span><span style=color:#859900>class</span> <span style=color:#cb4b16>hello</span>{
-</span></span><span style=display:flex><span><span style=color:#859900>private</span>:
-</span></span><span style=display:flex><span>    <span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span><span style=color:#859900>public</span>:
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>);
-</span></span><span style=display:flex><span>    <span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>print</span>();
-</span></span><span style=display:flex><span>};
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#268bd2>hello</span>::<span style=color:#268bd2>hello</span>(<span style=color:#859900;font-weight:700>int</span> <span style=color:#268bd2>c</span>=<span style=color:#2aa198;font-weight:700>0</span>)<span style=color:#93a1a1;font-style:italic>//定义处加上了一个默认值
-</span></span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic></span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>b</span> = <span style=color:#268bd2>c</span>;
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#859900;font-weight:700>void</span> <span style=color:#268bd2>hello</span>::<span style=color:#268bd2>print</span>()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#268bd2>cout</span> &lt;&lt;<span style=color:#268bd2>b</span>;
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#93a1a1;font-style:italic>#endif </span><span style=color:#93a1a1;font-style:italic>// EXAMPLE_H_INCLUDED
-</span></span></span></code></pre></div><p>编译通过</p><p><strong>思考：类的用户在使用类的时候主要是借助头文件来知道这个类是如何使用的，而不会去看执行文件。如果在执行文件中给出了参数的默认值，很有可能被用户所忽略。所以c++可能规定，必须在头文件中给出默认值，这是很有实用意义的。而如果写在一个文件中，用户也可以看到函数的定义，可能因此c++允许在定义时给出默认值。</strong></p></section><div id=waline></div><script>Waline.init({el:"#waline",serverURL:"https://comments.tangda.me/",emoji:["https://unpkg.com/@waline/emojis@1.0.1/qq","https://unpkg.com/@waline/emojis@1.0.1/tw-emoji"],pageview:!0,dark:'html[theme="dark"]'})</script><div class=post-tags><nav class="nav tags"><ul class=tags><li><a href=/tags/c++>C++</a></li></ul></nav></div></article></main><footer><div style=display:flex><a class=soc href=mailto:tangyazhou518@outlook.com rel=me title=Mail><i data-feather=mail></i></a>
-<a class=border></a><a class=soc href=https://github.com/ADSWT518/ rel=me title=Github><i data-feather=github></i></a>
-<a class=border></a><a class=soc href=https://twitter.com/AndrewTang518 rel=me title=Twitter><i data-feather=twitter></i></a>
-<a class=border></a><a class=soc href=https://www.zhihu.com/people/ADSWT518 title=Zhihu><i class="iconfont icon-zhihu"></i></a>
-<a class=border></a></div><div class=footer-info>2025 © Yazhou Tang | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a> | Made with ❤️</div></footer>当前页阅读量为: <span class=waline-pageview-count , data-path=/posts/2019-12-11-cpp-multi-files-constructor/></span>
-<script>feather.replace()</script></div></body></html>
+<!DOCTYPE html>
+<html><head lang="en">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>程序含有多个文件时构造函数的默认值问题 - Yazhou Tang (唐亚周)</title><link rel="icon" type="image/png" href=https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="初学C&#43;&#43;时的一次debug记录" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="https://www.tangda.me/posts/2019-12-11-cpp-multi-files-constructor/">
+  <meta property="og:site_name" content="Yazhou Tang (唐亚周)">
+  <meta property="og:title" content="程序含有多个文件时构造函数的默认值问题">
+  <meta property="og:description" content="初学C&#43;&#43;时的一次debug记录">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2019-12-11T00:00:00+00:00">
+    <meta property="article:modified_time" content="2019-12-11T00:00:00+00:00">
+    <meta property="article:tag" content="C&#43;&#43;">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="程序含有多个文件时构造函数的默认值问题">
+  <meta name="twitter:description" content="初学C&#43;&#43;时的一次debug记录">
+<script src="https://www.tangda.me/js/feather.min.js"></script>
+	
+	
+        <link href="https://www.tangda.me/css/fonts.07926cba08f8aefb2b6f175d5d45dddce0fa79cabb73630dc8a28f280b8f95ff.css" rel="stylesheet">
+	
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="https://www.tangda.me/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://www.tangda.me/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
+	
+
+	
+	
+
+	
+	
+
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://www.tangda.me/">Yazhou Tang (唐亚周)</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">Blog</a>
+		
+		<a href="/misc">Misc</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="https://www.tangda.me/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">程序含有多个文件时构造函数的默认值问题</h1>
+			<div class="description">
+	
+	初学C&#43;&#43;时的一次debug记录
+	
+</div>
+			<div class="meta">Posted on Dec 11, 2019</div>
+		</div>
+		
+
+		
+
+		<section class="body">
+			<blockquote>
+<p>本文原载于 <a href="https://blog.csdn.net/qq_45377501/article/details/103499442">https://blog.csdn.net/qq_45377501/article/details/103499442</a> ，是大一初学C++时的一次debug记录。</p></blockquote>
+<p>如果想在定义对象时可以指定初值也可以不指定，可以在类中设计一个带默认值的构造函数。下面这个程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：main.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&#34;example.h&#34;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&lt;iostream&gt;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#859900">using</span> <span style="color:#859900">namespace</span> <span style="color:#268bd2">std</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">hello</span> <span style="color:#268bd2">A</span>(<span style="color:#2aa198;font-weight:bold">2</span>), <span style="color:#268bd2">B</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">A</span>.<span style="color:#268bd2">print</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">B</span>.<span style="color:#268bd2">print</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#859900">return</span> <span style="color:#2aa198;font-weight:bold">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：example.h
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#ifndef EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#define EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#859900">class</span> <span style="color:#cb4b16">hello</span>{
+</span></span><span style="display:flex;"><span><span style="color:#859900">private</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span><span style="color:#859900">public</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">print</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#endif </span><span style="color:#93a1a1;font-style:italic">// EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：example.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&#34;example.h&#34;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&lt;iostream&gt;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#859900">using</span> <span style="color:#859900">namespace</span> <span style="color:#268bd2">std</span>;
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">hello</span>::<span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">b</span> = <span style="color:#268bd2">c</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">hello</span>::<span style="color:#268bd2">print</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">cout</span> &lt;&lt;<span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在编译时会报错：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>error: no matching <span style="color:#859900">function</span> <span style="color:#859900">for</span> call to <span style="color:#2aa198">&#39;hello::hello()&#39;</span>
+</span></span></code></pre></div><p>是因为我们定义的构造函数必须要指定初值</p>
+<p>而如果把类的执行文件改成这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：example.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&#34;example.h&#34;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&lt;iostream&gt;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#859900">using</span> <span style="color:#859900">namespace</span> <span style="color:#268bd2">std</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">hello</span>::<span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>=<span style="color:#2aa198;font-weight:bold">0</span>)<span style="color:#93a1a1;font-style:italic">//加上了一个默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">b</span> = <span style="color:#268bd2">c</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">hello</span>::<span style="color:#268bd2">print</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">cout</span> &lt;&lt;<span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>却仍然出现了同样的错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>error: no matching <span style="color:#859900">function</span> <span style="color:#859900">for</span> call to <span style="color:#2aa198">&#39;hello::hello()&#39;</span>
+</span></span></code></pre></div><p>而如果不改变执行文件而改变头文件中构造函数的声明：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：example.h
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#ifndef EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#define EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#859900">class</span> <span style="color:#cb4b16">hello</span>{
+</span></span><span style="display:flex;"><span><span style="color:#859900">private</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span><span style="color:#859900">public</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>=<span style="color:#2aa198;font-weight:bold">0</span>);<span style="color:#93a1a1;font-style:italic">//加上了一个默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>    <span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">print</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#endif </span><span style="color:#93a1a1;font-style:italic">// EXAMPLE_H_INCLUDED
+</span></span></span></code></pre></div><p>则编译通过</p>
+<p>而如果执行文件和头文件的构造函数都加上默认值：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：example.h
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#ifndef EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#define EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#859900">class</span> <span style="color:#cb4b16">hello</span>{
+</span></span><span style="display:flex;"><span><span style="color:#859900">private</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span><span style="color:#859900">public</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>=<span style="color:#2aa198;font-weight:bold">0</span>);<span style="color:#93a1a1;font-style:italic">//加上了一个默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>    <span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">print</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#endif </span><span style="color:#93a1a1;font-style:italic">// EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：example.cpp
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&#34;example.h&#34;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#include</span> <span style="color:#93a1a1;font-style:italic">&lt;iostream&gt;</span><span style="color:#93a1a1;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#859900">using</span> <span style="color:#859900">namespace</span> <span style="color:#268bd2">std</span>;
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">hello</span>::<span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>=<span style="color:#2aa198;font-weight:bold">0</span>)<span style="color:#93a1a1;font-style:italic">//加上了一个默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">b</span> = <span style="color:#268bd2">c</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">hello</span>::<span style="color:#268bd2">print</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">cout</span> &lt;&lt;<span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>则在编译时会报错：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>error: default argument given <span style="color:#859900">for</span> parameter <span style="color:#2aa198;font-weight:bold">1</span> of <span style="color:#2aa198">&#39;hello::hello(int)&#39;</span> [-fpermissive]
+</span></span></code></pre></div><p>这是因为函数参数的默认值不可以在声明和定义时都给出</p>
+<p>当声明和定义在同一个文件中时，默认值可以在两个地方的任意一个地方给出；可是分开成两个文件时，就只能在声明时给出了。</p>
+<p>再做尝试，将构造函数放入头文件中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">//文件：example.h
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span><span style="color:#93a1a1;font-style:italic">#ifndef EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#define EXAMPLE_H_INCLUDED
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#859900">class</span> <span style="color:#cb4b16">hello</span>{
+</span></span><span style="display:flex;"><span><span style="color:#859900">private</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span><span style="color:#859900">public</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">print</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#268bd2">hello</span>::<span style="color:#268bd2">hello</span>(<span style="color:#859900;font-weight:bold">int</span> <span style="color:#268bd2">c</span>=<span style="color:#2aa198;font-weight:bold">0</span>)<span style="color:#93a1a1;font-style:italic">//定义处加上了一个默认值
+</span></span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic"></span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">b</span> = <span style="color:#268bd2">c</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859900;font-weight:bold">void</span> <span style="color:#268bd2">hello</span>::<span style="color:#268bd2">print</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#268bd2">cout</span> &lt;&lt;<span style="color:#268bd2">b</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#93a1a1;font-style:italic">#endif </span><span style="color:#93a1a1;font-style:italic">// EXAMPLE_H_INCLUDED
+</span></span></span></code></pre></div><p>编译通过</p>
+<p><strong>思考：类的用户在使用类的时候主要是借助头文件来知道这个类是如何使用的，而不会去看执行文件。如果在执行文件中给出了参数的默认值，很有可能被用户所忽略。所以c++可能规定，必须在头文件中给出默认值，这是很有实用意义的。而如果写在一个文件中，用户也可以看到函数的定义，可能因此c++允许在定义时给出默认值。</strong></p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/c&#43;&#43;">C&#43;&#43;</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"></div>
+  <div class="footer-info">
+    2025  © Yazhou Tang |  <a 
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a> | Made with ❤️
+  </div>
+</footer>
+
+
+</div>
+    </body>
+</html>
