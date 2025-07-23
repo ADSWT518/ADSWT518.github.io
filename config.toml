@@ -1,6 +1,6 @@
 baseURL = "https://www.tangda.me/"
 languageCode = "en-us"
-title = "YazhouTang"
+title = "Yazhou Tang (唐亚周)"
 theme = "archie"
 copyright = "© Yazhou Tang"
 
@@ -17,35 +17,10 @@ enableemoji = true
   favicon="https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png"
 	mode="toggle" # color-mode → light,dark or auto
 	useCDN=false # don't use CDNs for fonts and icons, instead serve them locally.
-	subtitle = "欢迎来到我的个人网站！这里有一些记录和思考。"
+	subtitle = "Welcome to my personal website!"
 
 
 # Social Tags
-
-[[params.social]]
-name = "Mail"
-icon = "mail"
-url = "mailto:tangyazhou518@outlook.com"
-
-[[params.social]]
-name = "Github"
-icon = "github"
-url = "https://github.com/ADSWT518/"
-
-[[params.social]]
-name = "Twitter"
-icon = "twitter"
-url = "https://twitter.com/AndrewTang518"
-
-[[params.social]]
-name = "LinkedIn"
-icon = "linkedin"
-url = "https://www.linkedin.com/in/yazhoutang/"
-
-[[params.icon]]
-name = "Zhihu"
-icon = "iconfont icon-zhihu"
-url = "https://www.zhihu.com/people/ADSWT518"
 
 # Main menu Items
 
@@ -55,19 +30,14 @@ url = "/"
 weight = 1
 
 [[menu.main]]
-name = "All posts"
+name = "Blog"
 url = "/posts"
 weight = 2
 
 [[menu.main]]
-name = "About"
-url = "/about"
+name = "Misc"
+url = "/misc"
 weight = 3
-
-[[menu.main]]
-name = "Tags"
-url = "/tags"
-weight = 4
 
 [markup]
   [markup.goldmark]
