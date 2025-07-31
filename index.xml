@@ -40,7 +40,36 @@
 &lt;li>&lt;a href="https://github.com/ageitgey/face_recognition">https://github.com/ageitgey/face_recognition&lt;/a>&lt;/li>
 &lt;/ul>
 &lt;/li>
-&lt;/ol></description></item><item><title>用Opam安装Frama-C</title><link>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</link><pubDate>Wed, 14 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</guid><description>&lt;h2 id="系统信息">系统信息&lt;/h2>
+&lt;/ol></description></item><item><title>GitHub Actions卡住的问题</title><link>https://www.tangda.me/posts/2025-07-31-github-actions-stuck/</link><pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-07-31-github-actions-stuck/</guid><description>&lt;h2 id="问题表现">问题表现&lt;/h2>
+&lt;p>这个action一直queued，然后24小时后超时，自动结束。但是我运行其他的action都正常。&lt;/p>
+&lt;p>&lt;img src="./action-failed.png" alt="img">&lt;/p>
+&lt;h2 id="解决方案">解决方案&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>首先把 &lt;code>gh-pages.yml&lt;/code> 文件发给LLM让它分析，它告诉我&lt;/p>
+&lt;blockquote>
+&lt;p>确保使用的运行器标签正确：该工作流使用runs-on: ubuntu-20.04，这是GitHub托管的运行器标准标签，应该可用。但可以尝试更新到ubuntu-latest或ubuntu-22.04，以使用更新的运行器环境。&lt;/p>&lt;/blockquote>
+&lt;/li>
+&lt;li>
+&lt;p>然后去查了一下，发现Available Images里根本没有20.04&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>，原来在今年四月给移除了&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>。&lt;/p>
+&lt;p>&lt;img src="./action-images.png" alt="img">&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>然后把 &lt;code>gh-pages.yml&lt;/code> 中的 &lt;code>ubuntu-20.04&lt;/code> 改成 &lt;code>ubuntu-latest&lt;/code> 就正常了&lt;/p>
+&lt;p>&lt;a href="https://github.com/ADSWT518/ADSWT518.github.io/commit/80747b2a342414f794d62f68886218a9560e0ff3">chore: update github actions image to ubuntu-latest · ADSWT518/ADSWT518.github.io@80747b2&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://github.com/actions/runner-images">actions/runner-images: GitHub Actions runner images&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li id="fn:2">
+&lt;p>&lt;a href="https://github.com/actions/runner-images/pull/11748">Ubuntu 20 Deprecation changes by Prabhatkumar59 · Pull Request #11748 · actions/runner-images&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></description></item><item><title>用Opam安装Frama-C</title><link>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</link><pubDate>Wed, 14 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</guid><description>&lt;h2 id="系统信息">系统信息&lt;/h2>
 &lt;ul>
 &lt;li>linux&lt;/li>
 &lt;li>gcc 15.1.1&lt;/li>
