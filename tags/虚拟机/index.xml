@@ -1,20 +1,30 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>虚拟机 on Yazhou Tang (唐亚周)</title>
-    <link>https://www.tangda.me/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</link>
-    <description>Recent content in 虚拟机 on Yazhou Tang (唐亚周)</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <copyright>© Yazhou Tang</copyright>
-    <lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://www.tangda.me/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>在ArchLinux下使用QEMU/KVM和Virt Manager安装Windows虚拟机</title>
-      <link>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</link>
-      <pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</guid>
-      <description>&lt;h2 id=&#34;安装系统前的准备&#34;&gt;安装系统前的准备&lt;/h2&gt;&#xA;&lt;p&gt;参考：https://ivonblog.com/posts/archlinux-qemu-virt-manager/&lt;/p&gt;&#xA;&lt;p&gt;安装必要的包&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -S qemu-full libvirt virt-manager&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还有一些utils包，缺啥装啥&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -S dnsmasq &#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动服务&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl &lt;span style=&#34;color:#cb4b16&#34;&gt;enable&lt;/span&gt; --now libvirtd&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo virsh net-start default&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo virsh net-autostart default&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;把当前用户加到用户组&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo gpasswd -a &lt;span style=&#34;color:#268bd2&#34;&gt;$USER&lt;/span&gt; libvirt&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo gpasswd -a &lt;span style=&#34;color:#268bd2&#34;&gt;$USER&lt;/span&gt; kvm&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;安装windows-10系统&#34;&gt;安装Windows 10系统&lt;/h2&gt;&#xA;&lt;p&gt;参考：https://ivonblog.com/posts/install-windows-11-qemu-kvm-on-linux/&lt;/p&gt;&#xA;&lt;h3 id=&#34;问题排查无网络&#34;&gt;问题排查：无网络&lt;/h3&gt;&#xA;&lt;p&gt;我使用的是NAT模式（懒得配置桥接了），网卡选择了virtio模式。问题在于virtio模式也需要安装特定驱动，否则windows上无法识别网卡。&lt;/p&gt;&#xA;&lt;p&gt;DeepSeek表示：&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;在下载并挂载了virtio-win.iso之后：&lt;/p&gt;&#xA;&lt;p&gt;在Windows中安装驱动​​：打开设备管理器 → 右键未知设备 → 更新驱动程序 → 浏览ISO中的NetKVM目录（根据系统选择w10或w11）。&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;h2 id=&#34;代理设置&#34;&gt;代理设置&lt;/h2&gt;&#xA;&lt;p&gt;宿主机代理软件开启port sharing，然后通过宿主机运行&lt;code&gt;ip addr&lt;/code&gt;或虚拟机运行&lt;code&gt;ipconfig&lt;/code&gt;获取虚拟机的默认网关，最后在虚拟机设置中填入到代理服务器即可。&lt;/p&gt;&#xA;&lt;h2 id=&#34;使用virtiofs共享文件夹&#34;&gt;使用VirtioFS共享文件夹&lt;/h2&gt;&#xA;&lt;p&gt;参考：https://ivonblog.com/posts/libvirt-virtiofs/&lt;/p&gt;&#xA;&lt;h2 id=&#34;todo&#34;&gt;TODO&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;窗口分辨率的设置&lt;/li&gt;&#xA;&lt;li&gt;经常用着用着就死机了，好像也没啥好办法 &amp;#x1f607;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>虚拟机 on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/</link><description>Recent content in 虚拟机 on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/index.xml" rel="self" type="application/rss+xml"/><item><title>在ArchLinux下使用QEMU/KVM和Virt Manager安装Windows虚拟机</title><link>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</link><pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</guid><description>&lt;h2 id="安装系统前的准备">安装系统前的准备&lt;/h2>
+&lt;p>参考：https://ivonblog.com/posts/archlinux-qemu-virt-manager/&lt;/p>
+&lt;p>安装必要的包&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo pacman -S qemu-full libvirt virt-manager
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>还有一些utils包，缺啥装啥&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo pacman -S dnsmasq 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>启动服务&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo systemctl &lt;span style="color:#cb4b16">enable&lt;/span> --now libvirtd
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo virsh net-start default
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo virsh net-autostart default
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>把当前用户加到用户组&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo gpasswd -a &lt;span style="color:#268bd2">$USER&lt;/span> libvirt
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo gpasswd -a &lt;span style="color:#268bd2">$USER&lt;/span> kvm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安装windows-10系统">安装Windows 10系统&lt;/h2>
+&lt;p>参考：https://ivonblog.com/posts/install-windows-11-qemu-kvm-on-linux/&lt;/p>
+&lt;h3 id="问题排查无网络">问题排查：无网络&lt;/h3>
+&lt;p>我使用的是NAT模式（懒得配置桥接了），网卡选择了virtio模式。问题在于virtio模式也需要安装特定驱动，否则windows上无法识别网卡。&lt;/p>
+&lt;p>DeepSeek表示：&lt;/p>
+&lt;blockquote>
+&lt;p>在下载并挂载了virtio-win.iso之后：&lt;/p>
+&lt;p>在Windows中安装驱动​​：打开设备管理器 → 右键未知设备 → 更新驱动程序 → 浏览ISO中的NetKVM目录（根据系统选择w10或w11）。&lt;/p>&lt;/blockquote>
+&lt;h2 id="代理设置">代理设置&lt;/h2>
+&lt;p>宿主机代理软件开启port sharing，然后通过宿主机运行&lt;code>ip addr&lt;/code>或虚拟机运行&lt;code>ipconfig&lt;/code>获取虚拟机的默认网关，最后在虚拟机设置中填入到代理服务器即可。&lt;/p>
+&lt;h2 id="使用virtiofs共享文件夹">使用VirtioFS共享文件夹&lt;/h2>
+&lt;p>参考：https://ivonblog.com/posts/libvirt-virtiofs/&lt;/p>
+&lt;h2 id="todo">TODO&lt;/h2>
+&lt;ul>
+&lt;li>窗口分辨率的设置&lt;/li>
+&lt;li>经常用着用着就死机了，好像也没啥好办法 &amp;#x1f607;&lt;/li>
+&lt;/ul></description></item></channel></rss>

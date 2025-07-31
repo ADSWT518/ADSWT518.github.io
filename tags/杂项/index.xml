@@ -1,27 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>杂项 on Yazhou Tang (唐亚周)</title>
-    <link>https://www.tangda.me/tags/%E6%9D%82%E9%A1%B9/</link>
-    <description>Recent content in 杂项 on Yazhou Tang (唐亚周)</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <copyright>© Yazhou Tang</copyright>
-    <lastBuildDate>Sat, 17 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://www.tangda.me/tags/%E6%9D%82%E9%A1%B9/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Hello, Hugo!</title>
-      <link>https://www.tangda.me/posts/2021-07-17-hello-hugo/</link>
-      <pubDate>Sat, 17 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://www.tangda.me/posts/2021-07-17-hello-hugo/</guid>
-      <description>&lt;p&gt;因为Jekyll实在是不太会用，于是决定换一个框架！折腾了几天之后，基于Hugo的个人网站做好了！好耶！&lt;/p&gt;&#xA;&lt;p&gt;突然发现这个网站基本上是每到假期才会更新一下下&amp;hellip;&amp;hellip;积少成多，积少成多 &amp;#x1f60b;&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Hello, world!</title>
-      <link>https://www.tangda.me/posts/2020-07-29-hello-world/</link>
-      <pubDate>Wed, 29 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.tangda.me/posts/2020-07-29-hello-world/</guid>
-      <description>&lt;p&gt;又鼓捣了一天的博客。终于还是基本上搞好了。&lt;/p&gt;&#xA;&lt;p&gt;那么，这就是我的第一篇博文了 &amp;#x1f604; ！&lt;/p&gt;&#xA;&lt;p&gt;这个博客就用来记录我的生活和思考吧，也会写一些学习的知识。&lt;/p&gt;&#xA;&lt;p&gt;希望看到这里的人，一切顺利！&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#93a1a1;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#93a1a1;font-style:italic&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#93a1a1;font-style:italic&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#93a1a1;font-style:italic&#34;&gt;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#859900;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#268bd2&#34;&gt;main&lt;/span&gt;()&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#268bd2&#34;&gt;std&lt;/span&gt;::&lt;span style=&#34;color:#268bd2&#34;&gt;cout&lt;/span&gt; &amp;lt;&amp;lt; &lt;span style=&#34;color:#2aa198&#34;&gt;&amp;#34;Hello, world!&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#2aa198&#34;&gt;Welcome to my blog!&amp;#34;&lt;/span&gt;;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>杂项 on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/%E6%9D%82%E9%A1%B9/</link><description>Recent content in 杂项 on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Sat, 17 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/%E6%9D%82%E9%A1%B9/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello, Hugo!</title><link>https://www.tangda.me/posts/2021-07-17-hello-hugo/</link><pubDate>Sat, 17 Jul 2021 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2021-07-17-hello-hugo/</guid><description>&lt;p>因为Jekyll实在是不太会用，于是决定换一个框架！折腾了几天之后，基于Hugo的个人网站做好了！好耶！&lt;/p>
+&lt;p>突然发现这个网站基本上是每到假期才会更新一下下&amp;hellip;&amp;hellip;积少成多，积少成多 &amp;#x1f60b;&lt;/p></description></item><item><title>Hello, world!</title><link>https://www.tangda.me/posts/2020-07-29-hello-world/</link><pubDate>Wed, 29 Jul 2020 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2020-07-29-hello-world/</guid><description>&lt;p>又鼓捣了一天的博客。终于还是基本上搞好了。&lt;/p>
+&lt;p>那么，这就是我的第一篇博文了 &amp;#x1f604; ！&lt;/p>
+&lt;p>这个博客就用来记录我的生活和思考吧，也会写一些学习的知识。&lt;/p>
+&lt;p>希望看到这里的人，一切顺利！&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic">#include&lt;/span> &lt;span style="color:#93a1a1;font-style:italic">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span style="color:#93a1a1;font-style:italic">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#859900;font-weight:bold">int&lt;/span> &lt;span style="color:#268bd2">main&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#268bd2">std&lt;/span>::&lt;span style="color:#268bd2">cout&lt;/span> &amp;lt;&amp;lt; &lt;span style="color:#2aa198">&amp;#34;Hello, world!&lt;/span>&lt;span style="color:#2aa198">\n&lt;/span>&lt;span style="color:#2aa198">Welcome to my blog!&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

@@ -1,171 +1,44 @@
-<!DOCTYPE html>
-<html><head lang="en">
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>如何在dual-boot下共享Linux与WSL的文件 - Yazhou Tang (唐亚周)</title><link rel="icon" type="image/png" href=https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png /><meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="省流：挂载硬盘" />
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content="https://www.tangda.me/posts/2025-02-15-mount-linux-to-wsl/">
-  <meta property="og:site_name" content="Yazhou Tang (唐亚周)">
-  <meta property="og:title" content="如何在dual-boot下共享Linux与WSL的文件">
-  <meta property="og:description" content="省流：挂载硬盘">
-  <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-02-15T00:00:00+00:00">
-    <meta property="article:modified_time" content="2025-02-15T00:00:00+00:00">
-    <meta property="article:tag" content="Linux">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="如何在dual-boot下共享Linux与WSL的文件">
-  <meta name="twitter:description" content="省流：挂载硬盘">
-<script src="https://www.tangda.me/js/feather.min.js"></script>
-	
-	
-        <link href="https://www.tangda.me/css/fonts.07926cba08f8aefb2b6f175d5d45dddce0fa79cabb73630dc8a28f280b8f95ff.css" rel="stylesheet">
-	
-
-	
-	<link rel="stylesheet" type="text/css" media="screen" href="https://www.tangda.me/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css" />
-		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="https://www.tangda.me/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css"  disabled />
-	
-
-	
-	
-
-	
-	
-
-	
-</head>
-<body>
-        <div class="content"><header>
-	<div class="main">
-		<a href="https://www.tangda.me/">Yazhou Tang (唐亚周)</a>
-	</div>
-	<nav>
-		
-		<a href="/">Home</a>
-		
-		<a href="/posts">Blog</a>
-		
-		<a href="/misc">Misc</a>
-		
-		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
-		<script src="https://www.tangda.me/js/themetoggle.js"></script>
-		
-	</nav>
-</header>
-
-<main>
-	<article>
-		<div class="title">
-			<h1 class="title">如何在dual-boot下共享Linux与WSL的文件</h1>
-			<div class="description">
-	
-	省流：挂载硬盘
-	
-</div>
-			<div class="meta">Posted on Feb 15, 2025</div>
-		</div>
-		
-
-		
-
-		<section class="body">
-			<h2 id="动机">动机</h2>
-<p>众所周知，WSL2与WSL1相比，最大的劣势就在于跨文件系统的读写效率<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，所以如果在WSL下进行开发，那么尽量将文件存储于WSL文件系统中。但我的笔记本是双系统，主要工作环境是Arch Linux系统，安装WSL只是预防Arch Linux滚挂的紧急情况。</p>
-<p>我以前使用的方案是，将所有文件存储在Windows系统中，Arch Linux系统通过挂载硬盘的方式访问，WSL通过跨文件系统的方式访问。这样虽然可以实现一份文件多处共享，但受限于WSL2跨文件系统读写效率低下的问题。</p>
-<p>因此，在购入新电脑后，我将所有文件存储在Arch Linux系统中，在WSL2中直接挂载Arch Linux系统所在的硬盘，通过挂载硬盘的方式直接访问。至于Windows系统，反正没有配置开发环境，能用编辑器打开代码文件即可。</p>
-<h2 id="操作流程">操作流程</h2>
-<p>参考这两个链接一步一步来即可，具体过程略。</p>
-<p><a href="https://github.com/microsoft/WSL/issues/6073#issuecomment-1774085064">Is it possible to automount partition/drive using wsl &ndash;mount after restart? · Issue #6073 · microsoft/WSL</a></p>
-<p><a href="https://medium.com/@stefan.berkner/automatically-starting-an-external-encrypted-ssd-in-windows-subsystem-wsl-6403c34e9680">Automatically Starting an External Encrypted SSD in Windows Subsystem (WSL) | by Stefan Berkner | Medium</a></p>
-<h2 id="实验结果">实验结果</h2>
-<p>我测试了三种情况下的读写实验结果。</p>
-<ol>
-<li>WSL内部文件系统（文件存放于WSL文件系统中）</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#cb4b16">time</span> dd <span style="color:#859900">if</span>=/dev/zero <span style="color:#268bd2">of</span>=/tmp/test <span style="color:#268bd2">bs</span>=8k <span style="color:#268bd2">count</span>=<span style="color:#2aa198;font-weight:bold">1000000</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>1000000+0 records in
-</span></span><span style="display:flex;"><span>1000000+0 records out
-</span></span><span style="display:flex;"><span><span style="color:#2aa198;font-weight:bold">8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 14.5304 s, <span style="color:#2aa198;font-weight:bold">564</span> MB/s
-</span></span><span style="display:flex;"><span>dd <span style="color:#859900">if</span>=/dev/zero <span style="color:#268bd2">of</span>=/tmp/test <span style="color:#268bd2">bs</span>=8k <span style="color:#268bd2">count</span>=<span style="color:#2aa198;font-weight:bold">1000000</span>  0.40s user 14.10s system -45% cpu -32.143 total
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>$ <span style="color:#cb4b16">time</span> dd <span style="color:#859900">if</span>=/tmp/test <span style="color:#268bd2">of</span>=/dev/null <span style="color:#268bd2">bs</span>=8k
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>1000000+0 records in
-</span></span><span style="display:flex;"><span>1000000+0 records out
-</span></span><span style="display:flex;"><span><span style="color:#2aa198;font-weight:bold">8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 11.3272 s, <span style="color:#2aa198;font-weight:bold">723</span> MB/s
-</span></span><span style="display:flex;"><span>dd <span style="color:#859900">if</span>=/tmp/test <span style="color:#268bd2">of</span>=/dev/null <span style="color:#268bd2">bs</span>=8k  0.38s user 10.94s system 99% cpu 11.322 total
-</span></span></code></pre></div><ol start="2">
-<li>跨文件系统（文件存放于Windows文件系统中）</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#cb4b16">time</span> dd <span style="color:#859900">if</span>=/dev/zero <span style="color:#268bd2">of</span>=/mnt/c/Users/tangy/test <span style="color:#268bd2">bs</span>=8k <span style="color:#268bd2">count</span>=<span style="color:#2aa198;font-weight:bold">1000000</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>1000000+0 records in
-</span></span><span style="display:flex;"><span>1000000+0 records out
-</span></span><span style="display:flex;"><span><span style="color:#2aa198;font-weight:bold">8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 221.01 s, 37.1 MB/s
-</span></span><span style="display:flex;"><span>dd <span style="color:#859900">if</span>=/dev/zero <span style="color:#268bd2">of</span>=/mnt/c/Users/tangy/test <span style="color:#268bd2">bs</span>=8k <span style="color:#268bd2">count</span>=<span style="color:#2aa198;font-weight:bold">1000000</span>  1.30s user 14.70s system 9% cpu 2:54.32 total
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>$ <span style="color:#cb4b16">time</span> dd <span style="color:#859900">if</span>=/mnt/c/Users/tangy/test <span style="color:#268bd2">of</span>=/dev/null <span style="color:#268bd2">bs</span>=8k
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>1000000+0 records in
-</span></span><span style="display:flex;"><span>1000000+0 records out
-</span></span><span style="display:flex;"><span><span style="color:#2aa198;font-weight:bold">8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 256.3 s, 32.0 MB/s
-</span></span><span style="display:flex;"><span>dd <span style="color:#859900">if</span>=/mnt/c/Users/tangy/test <span style="color:#268bd2">of</span>=/dev/null <span style="color:#268bd2">bs</span>=8k  1.28s user 12.21s system 5% cpu 4:16.30 total
-</span></span></code></pre></div><ol start="3">
-<li>挂载硬盘（文件存放于挂载硬盘的Arch Linux文件系统中）</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#cb4b16">time</span> dd <span style="color:#859900">if</span>=/dev/zero <span style="color:#268bd2">of</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style="color:#268bd2">bs</span>=8k <span style="color:#268bd2">count</span>=<span style="color:#2aa198;font-weight:bold">1000000</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>1000000+0 records in
-</span></span><span style="display:flex;"><span>1000000+0 records out
-</span></span><span style="display:flex;"><span><span style="color:#2aa198;font-weight:bold">8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 10.8812 s, <span style="color:#2aa198;font-weight:bold">753</span> MB/s
-</span></span><span style="display:flex;"><span>dd <span style="color:#859900">if</span>=/dev/zero <span style="color:#268bd2">of</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style="color:#268bd2">bs</span>=8k   0.30s user 10.58s system 18% cpu 57.570 total
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>$ <span style="color:#cb4b16">time</span> dd <span style="color:#859900">if</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style="color:#268bd2">of</span>=/dev/null <span style="color:#268bd2">bs</span>=8k
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>1000000+0 records in
-</span></span><span style="display:flex;"><span>1000000+0 records out
-</span></span><span style="display:flex;"><span><span style="color:#2aa198;font-weight:bold">8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 2.04829 s, 4.0 GB/s
-</span></span><span style="display:flex;"><span>dd <span style="color:#859900">if</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style="color:#268bd2">of</span>=/dev/null <span style="color:#268bd2">bs</span>=8k  0.22s user 1.83s system 99% cpu 2.053 total
-</span></span></code></pre></div><p>可以看到1和3的效率远高于2，说明WSL2跨文件系统的读写效率确实很烂。而3比1的效率更高，可能是因为我自己买来安装Arch Linux的硬盘比电脑出厂自带的安装Windows的硬盘更好。</p>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p><a href="https://learn.microsoft.com/en-us/windows/wsl/compare-versions">https://learn.microsoft.com/en-us/windows/wsl/compare-versions</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
-</div>
-
-		</section>
-
-		<div class="post-tags">
-			
-			
-			<nav class="nav tags">
-				<ul class="tags">
-					
-					<li><a href="/tags/linux">Linux</a></li>
-					
-				</ul>
-			</nav>
-			
-			
-		</div>
-		</article>
-</main>
-<footer>
-  <div style="display:flex"></div>
-  <div class="footer-info">
-    2025  © Yazhou Tang |  <a 
-      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a> | Made with ❤️
-  </div>
-</footer>
-
-
-</div>
-    </body>
-</html>
+<!doctype html><html><head lang=en><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><title>如何在dual-boot下共享Linux与WSL的文件 - Yazhou Tang (唐亚周)</title><link rel=icon type=image/png href=https://img.icons8.com/external-those-icons-lineal-color-those-icons/24/000000/external-rice-restaurant-those-icons-lineal-color-those-icons.png><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="省流：挂载硬盘"><meta property="og:image" content><meta property="og:url" content="https://www.tangda.me/posts/2025-02-15-mount-linux-to-wsl/"><meta property="og:site_name" content="Yazhou Tang (唐亚周)"><meta property="og:title" content="如何在dual-boot下共享Linux与WSL的文件"><meta property="og:description" content="省流：挂载硬盘"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-02-15T00:00:00+00:00"><meta property="article:modified_time" content="2025-02-15T00:00:00+00:00"><meta property="article:tag" content="Linux"><meta name=twitter:card content="summary"><meta name=twitter:title content="如何在dual-boot下共享Linux与WSL的文件"><meta name=twitter:description content="省流：挂载硬盘"><script src=https://www.tangda.me/js/feather.min.js></script><link href=https://www.tangda.me/css/fonts.07926cba08f8aefb2b6f175d5d45dddce0fa79cabb73630dc8a28f280b8f95ff.css rel=stylesheet><link rel=stylesheet type=text/css media=screen href=https://www.tangda.me/css/main.5cebd7d4fb2b97856af8d32a6def16164fcf7d844e98e236fcb3559655020373.css><link id=darkModeStyle rel=stylesheet type=text/css href=https://www.tangda.me/css/dark.d22e2a2879d933a4b781535fc4c4c716e9f9d35ea4986dd0cbabda82effc4bdd.css disabled></head><body><div class=content><header><div class=main><a href=https://www.tangda.me/>Yazhou Tang (唐亚周)</a></div><nav><a href=/>Home</a>
+<a href=/posts>Blog</a>
+<a href=/misc>Misc</a>
+| <span id=dark-mode-toggle onclick=toggleTheme()></span>
+<script src=https://www.tangda.me/js/themetoggle.js></script></nav></header><main><article><div class=title><h1 class=title>如何在dual-boot下共享Linux与WSL的文件</h1><div class=description>省流：挂载硬盘</div><div class=meta>Posted on Feb 15, 2025</div></div><section class=body><h2 id=动机>动机</h2><p>众所周知，WSL2与WSL1相比，最大的劣势就在于跨文件系统的读写效率<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>，所以如果在WSL下进行开发，那么尽量将文件存储于WSL文件系统中。但我的笔记本是双系统，主要工作环境是Arch Linux系统，安装WSL只是预防Arch Linux滚挂的紧急情况。</p><p>我以前使用的方案是，将所有文件存储在Windows系统中，Arch Linux系统通过挂载硬盘的方式访问，WSL通过跨文件系统的方式访问。这样虽然可以实现一份文件多处共享，但受限于WSL2跨文件系统读写效率低下的问题。</p><p>因此，在购入新电脑后，我将所有文件存储在Arch Linux系统中，在WSL2中直接挂载Arch Linux系统所在的硬盘，通过挂载硬盘的方式直接访问。至于Windows系统，反正没有配置开发环境，能用编辑器打开代码文件即可。</p><h2 id=操作流程>操作流程</h2><p>参考这两个链接一步一步来即可，具体过程略。</p><p><a href=https://github.com/microsoft/WSL/issues/6073#issuecomment-1774085064>Is it possible to automount partition/drive using wsl &ndash;mount after restart? · Issue #6073 · microsoft/WSL</a></p><p><a href=https://medium.com/@stefan.berkner/automatically-starting-an-external-encrypted-ssd-in-windows-subsystem-wsl-6403c34e9680>Automatically Starting an External Encrypted SSD in Windows Subsystem (WSL) | by Stefan Berkner | Medium</a></p><h2 id=实验结果>实验结果</h2><p>我测试了三种情况下的读写实验结果。</p><ol><li>WSL内部文件系统（文件存放于WSL文件系统中）</li></ol><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ <span style=color:#cb4b16>time</span> dd <span style=color:#859900>if</span>=/dev/zero <span style=color:#268bd2>of</span>=/tmp/test <span style=color:#268bd2>bs</span>=8k <span style=color:#268bd2>count</span>=<span style=color:#2aa198;font-weight:700>1000000</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>1000000+0 records in
+</span></span><span style=display:flex><span>1000000+0 records out
+</span></span><span style=display:flex><span><span style=color:#2aa198;font-weight:700>8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 14.5304 s, <span style=color:#2aa198;font-weight:700>564</span> MB/s
+</span></span><span style=display:flex><span>dd <span style=color:#859900>if</span>=/dev/zero <span style=color:#268bd2>of</span>=/tmp/test <span style=color:#268bd2>bs</span>=8k <span style=color:#268bd2>count</span>=<span style=color:#2aa198;font-weight:700>1000000</span>  0.40s user 14.10s system -45% cpu -32.143 total
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$ <span style=color:#cb4b16>time</span> dd <span style=color:#859900>if</span>=/tmp/test <span style=color:#268bd2>of</span>=/dev/null <span style=color:#268bd2>bs</span>=8k
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>1000000+0 records in
+</span></span><span style=display:flex><span>1000000+0 records out
+</span></span><span style=display:flex><span><span style=color:#2aa198;font-weight:700>8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 11.3272 s, <span style=color:#2aa198;font-weight:700>723</span> MB/s
+</span></span><span style=display:flex><span>dd <span style=color:#859900>if</span>=/tmp/test <span style=color:#268bd2>of</span>=/dev/null <span style=color:#268bd2>bs</span>=8k  0.38s user 10.94s system 99% cpu 11.322 total
+</span></span></code></pre></div><ol start=2><li>跨文件系统（文件存放于Windows文件系统中）</li></ol><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ <span style=color:#cb4b16>time</span> dd <span style=color:#859900>if</span>=/dev/zero <span style=color:#268bd2>of</span>=/mnt/c/Users/tangy/test <span style=color:#268bd2>bs</span>=8k <span style=color:#268bd2>count</span>=<span style=color:#2aa198;font-weight:700>1000000</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>1000000+0 records in
+</span></span><span style=display:flex><span>1000000+0 records out
+</span></span><span style=display:flex><span><span style=color:#2aa198;font-weight:700>8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 221.01 s, 37.1 MB/s
+</span></span><span style=display:flex><span>dd <span style=color:#859900>if</span>=/dev/zero <span style=color:#268bd2>of</span>=/mnt/c/Users/tangy/test <span style=color:#268bd2>bs</span>=8k <span style=color:#268bd2>count</span>=<span style=color:#2aa198;font-weight:700>1000000</span>  1.30s user 14.70s system 9% cpu 2:54.32 total
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$ <span style=color:#cb4b16>time</span> dd <span style=color:#859900>if</span>=/mnt/c/Users/tangy/test <span style=color:#268bd2>of</span>=/dev/null <span style=color:#268bd2>bs</span>=8k
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>1000000+0 records in
+</span></span><span style=display:flex><span>1000000+0 records out
+</span></span><span style=display:flex><span><span style=color:#2aa198;font-weight:700>8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 256.3 s, 32.0 MB/s
+</span></span><span style=display:flex><span>dd <span style=color:#859900>if</span>=/mnt/c/Users/tangy/test <span style=color:#268bd2>of</span>=/dev/null <span style=color:#268bd2>bs</span>=8k  1.28s user 12.21s system 5% cpu 4:16.30 total
+</span></span></code></pre></div><ol start=3><li>挂载硬盘（文件存放于挂载硬盘的Arch Linux文件系统中）</li></ol><div class=highlight><pre tabindex=0 style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ <span style=color:#cb4b16>time</span> dd <span style=color:#859900>if</span>=/dev/zero <span style=color:#268bd2>of</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style=color:#268bd2>bs</span>=8k <span style=color:#268bd2>count</span>=<span style=color:#2aa198;font-weight:700>1000000</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>1000000+0 records in
+</span></span><span style=display:flex><span>1000000+0 records out
+</span></span><span style=display:flex><span><span style=color:#2aa198;font-weight:700>8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 10.8812 s, <span style=color:#2aa198;font-weight:700>753</span> MB/s
+</span></span><span style=display:flex><span>dd <span style=color:#859900>if</span>=/dev/zero <span style=color:#268bd2>of</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style=color:#268bd2>bs</span>=8k   0.30s user 10.58s system 18% cpu 57.570 total
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>$ <span style=color:#cb4b16>time</span> dd <span style=color:#859900>if</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style=color:#268bd2>of</span>=/dev/null <span style=color:#268bd2>bs</span>=8k
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>1000000+0 records in
+</span></span><span style=display:flex><span>1000000+0 records out
+</span></span><span style=display:flex><span><span style=color:#2aa198;font-weight:700>8192000000</span> bytes (8.2 GB, 7.6 GiB) copied, 2.04829 s, 4.0 GB/s
+</span></span><span style=display:flex><span>dd <span style=color:#859900>if</span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test <span style=color:#268bd2>of</span>=/dev/null <span style=color:#268bd2>bs</span>=8k  0.22s user 1.83s system 99% cpu 2.053 total
+</span></span></code></pre></div><p>可以看到1和3的效率远高于2，说明WSL2跨文件系统的读写效率确实很烂。而3比1的效率更高，可能是因为我自己买来安装Arch Linux的硬盘比电脑出厂自带的安装Windows的硬盘更好。</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p><a href=https://learn.microsoft.com/en-us/windows/wsl/compare-versions>https://learn.microsoft.com/en-us/windows/wsl/compare-versions</a>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></section><div class=post-tags><nav class="nav tags"><ul class=tags><li><a href=/tags/linux>Linux</a></li></ul></nav></div></article></main><footer><div style=display:flex></div><div class=footer-info>2025 © Yazhou Tang | <a href=https://github.com/athul/archie>Archie Theme</a> | Built with <a href=https://gohugo.io>Hugo</a> | Made with ❤️</div></footer></div></body></html>
