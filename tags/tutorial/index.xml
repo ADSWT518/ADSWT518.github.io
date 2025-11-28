@@ -1,43 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tutorial on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/tutorial/</link><description>Recent content in Tutorial on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/tutorial/index.xml" rel="self" type="application/rss+xml"/><item><title>[COMP101] 0-给准大学生的计算机入门课</title><link>https://www.tangda.me/posts/2025-07-31-comp-101-0/</link><pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-07-31-comp-101-0/</guid><description>&lt;h2 id="前言">前言&lt;/h2>
-&lt;p>这是写给我们家第二个大学生的教程。虽然她学的专业和计算机几乎没有关系，但我认为科学地使用计算机和大语言模型（Large Language Model, LLM）以及基本的编程能力是现代人的必备技能，于是就有了这个系列教程。&lt;/p>
-&lt;h2 id="内容规划">内容规划&lt;/h2>
-&lt;ol>
-&lt;li>Windows: How to use the new computer?
-&lt;ul>
-&lt;li>file management&lt;/li>
-&lt;li>software management&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Proxy: How to surf scientifically?
-&lt;ul>
-&lt;li>Why need proxy? Google instead of Baidu&lt;/li>
-&lt;li>How to proxy? Clash usage&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>LLM: the most powerful tool
-&lt;ul>
-&lt;li>How to choose LLM?&lt;/li>
-&lt;li>How to write good prompt?&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Linux, Git &amp;amp; GitHub: build your own website
-&lt;ul>
-&lt;li>WSL install&lt;/li>
-&lt;li>use Linux to install packages&lt;/li>
-&lt;li>Git usage&lt;/li>
-&lt;li>Hugo blog framework&lt;/li>
-&lt;li>GitHub usage, especially GitHub Pages&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Python 1: crawler
-&lt;ul>
-&lt;li>Python tutorial: &lt;a href="https://www.runoob.com/python3/python3-tutorial.html">https://www.runoob.com/python3/python3-tutorial.html&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://github.com/dataabc/weibo-crawler">https://github.com/dataabc/weibo-crawler&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Python 2 &amp;amp; AI: face recognization
-&lt;ul>
-&lt;li>&lt;a href="https://github.com/ageitgey/face_recognition">https://github.com/ageitgey/face_recognition&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ol></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tutorial on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/tutorial/</link><description>Recent content in Tutorial on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/tutorial/index.xml" rel="self" type="application/rss+xml"/><item><title>[COMP101] 0-给准大学生的计算机入门课</title><link>https://www.tangda.me/posts/2025-07-31-comp-101-0/</link><pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-07-31-comp-101-0/</guid><description>&lt;h2 id="前言"&gt;前言&lt;/h2&gt;
+&lt;p&gt;这是写给我们家第二个大学生的教程。虽然她学的专业和计算机几乎没有关系，但我认为科学地使用计算机和大语言模型（Large Language Model, LLM）以及基本的编程能力是现代人的必备技能，于是就有了这个系列教程。&lt;/p&gt;
+&lt;h2 id="内容规划"&gt;内容规划&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Windows: How to use the new computer?
+&lt;ul&gt;
+&lt;li&gt;file management&lt;/li&gt;
+&lt;li&gt;software management&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Proxy: How to surf scientifically?
+&lt;ul&gt;
+&lt;li&gt;Why need proxy? Google instead of Baidu&lt;/li&gt;
+&lt;li&gt;How to proxy? Clash usage&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;LLM: the most powerful tool
+&lt;ul&gt;
+&lt;li&gt;How to choose LLM?&lt;/li&gt;
+&lt;li&gt;How to write good prompt?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Linux, Git &amp;amp; GitHub: build your own website
+&lt;ul&gt;
+&lt;li&gt;WSL install&lt;/li&gt;
+&lt;li&gt;use Linux to install packages&lt;/li&gt;
+&lt;li&gt;Git usage&lt;/li&gt;
+&lt;li&gt;Hugo blog framework&lt;/li&gt;
+&lt;li&gt;GitHub usage, especially GitHub Pages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Python 1: crawler
+&lt;ul&gt;
+&lt;li&gt;Python tutorial: &lt;a href="https://www.runoob.com/python3/python3-tutorial.html"&gt;https://www.runoob.com/python3/python3-tutorial.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/dataabc/weibo-crawler"&gt;https://github.com/dataabc/weibo-crawler&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Python 2 &amp;amp; AI: face recognization
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/ageitgey/face_recognition"&gt;https://github.com/ageitgey/face_recognition&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description></item></channel></rss>

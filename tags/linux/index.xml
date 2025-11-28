@@ -1,88 +1,89 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/linux/</link><description>Recent content in Linux on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>在ArchLinux下使用QEMU/KVM和Virt Manager安装Windows虚拟机</title><link>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</link><pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</guid><description>&lt;h2 id="安装系统前的准备">安装系统前的准备&lt;/h2>
-&lt;p>参考：https://ivonblog.com/posts/archlinux-qemu-virt-manager/&lt;/p>
-&lt;p>安装必要的包&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo pacman -S qemu-full libvirt virt-manager
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>还有一些utils包，缺啥装啥&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo pacman -S dnsmasq 
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>启动服务&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo systemctl &lt;span style="color:#cb4b16">enable&lt;/span> --now libvirtd
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo virsh net-start default
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo virsh net-autostart default
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>把当前用户加到用户组&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo gpasswd -a &lt;span style="color:#268bd2">$USER&lt;/span> libvirt
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo gpasswd -a &lt;span style="color:#268bd2">$USER&lt;/span> kvm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安装windows-10系统">安装Windows 10系统&lt;/h2>
-&lt;p>参考：https://ivonblog.com/posts/install-windows-11-qemu-kvm-on-linux/&lt;/p>
-&lt;h3 id="问题排查无网络">问题排查：无网络&lt;/h3>
-&lt;p>我使用的是NAT模式（懒得配置桥接了），网卡选择了virtio模式。问题在于virtio模式也需要安装特定驱动，否则windows上无法识别网卡。&lt;/p>
-&lt;p>DeepSeek表示：&lt;/p>
-&lt;blockquote>
-&lt;p>在下载并挂载了virtio-win.iso之后：&lt;/p>
-&lt;p>在Windows中安装驱动​​：打开设备管理器 → 右键未知设备 → 更新驱动程序 → 浏览ISO中的NetKVM目录（根据系统选择w10或w11）。&lt;/p>&lt;/blockquote>
-&lt;h2 id="代理设置">代理设置&lt;/h2>
-&lt;p>宿主机代理软件开启port sharing，然后通过宿主机运行&lt;code>ip addr&lt;/code>或虚拟机运行&lt;code>ipconfig&lt;/code>获取虚拟机的默认网关，最后在虚拟机设置中填入到代理服务器即可。&lt;/p>
-&lt;h2 id="使用virtiofs共享文件夹">使用VirtioFS共享文件夹&lt;/h2>
-&lt;p>参考：https://ivonblog.com/posts/libvirt-virtiofs/&lt;/p>
-&lt;h2 id="todo">TODO&lt;/h2>
-&lt;ul>
-&lt;li>窗口分辨率的设置&lt;/li>
-&lt;li>经常用着用着就死机了，好像也没啥好办法 &amp;#x1f607;&lt;/li>
-&lt;/ul></description></item><item><title>如何在dual-boot下共享Linux与WSL的文件</title><link>https://www.tangda.me/posts/2025-02-15-mount-linux-to-wsl/</link><pubDate>Sat, 15 Feb 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-02-15-mount-linux-to-wsl/</guid><description>&lt;h2 id="动机">动机&lt;/h2>
-&lt;p>众所周知，WSL2与WSL1相比，最大的劣势就在于跨文件系统的读写效率&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>，所以如果在WSL下进行开发，那么尽量将文件存储于WSL文件系统中。但我的笔记本是双系统，主要工作环境是Arch Linux系统，安装WSL只是预防Arch Linux滚挂的紧急情况。&lt;/p>
-&lt;p>我以前使用的方案是，将所有文件存储在Windows系统中，Arch Linux系统通过挂载硬盘的方式访问，WSL通过跨文件系统的方式访问。这样虽然可以实现一份文件多处共享，但受限于WSL2跨文件系统读写效率低下的问题。&lt;/p>
-&lt;p>因此，在购入新电脑后，我将所有文件存储在Arch Linux系统中，在WSL2中直接挂载Arch Linux系统所在的硬盘，通过挂载硬盘的方式直接访问。至于Windows系统，反正没有配置开发环境，能用编辑器打开代码文件即可。&lt;/p>
-&lt;h2 id="操作流程">操作流程&lt;/h2>
-&lt;p>参考这两个链接一步一步来即可，具体过程略。&lt;/p>
-&lt;p>&lt;a href="https://github.com/microsoft/WSL/issues/6073#issuecomment-1774085064">Is it possible to automount partition/drive using wsl &amp;ndash;mount after restart? · Issue #6073 · microsoft/WSL&lt;/a>&lt;/p>
-&lt;p>&lt;a href="https://medium.com/@stefan.berkner/automatically-starting-an-external-encrypted-ssd-in-windows-subsystem-wsl-6403c34e9680">Automatically Starting an External Encrypted SSD in Windows Subsystem (WSL) | by Stefan Berkner | Medium&lt;/a>&lt;/p>
-&lt;h2 id="实验结果">实验结果&lt;/h2>
-&lt;p>我测试了三种情况下的读写实验结果。&lt;/p>
-&lt;ol>
-&lt;li>WSL内部文件系统（文件存放于WSL文件系统中）&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#cb4b16">time&lt;/span> dd &lt;span style="color:#859900">if&lt;/span>=/dev/zero &lt;span style="color:#268bd2">of&lt;/span>=/tmp/test &lt;span style="color:#268bd2">bs&lt;/span>=8k &lt;span style="color:#268bd2">count&lt;/span>=&lt;span style="color:#2aa198;font-weight:bold">1000000&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records in
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records out
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#2aa198;font-weight:bold">8192000000&lt;/span> bytes (8.2 GB, 7.6 GiB) copied, 14.5304 s, &lt;span style="color:#2aa198;font-weight:bold">564&lt;/span> MB/s
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dd &lt;span style="color:#859900">if&lt;/span>=/dev/zero &lt;span style="color:#268bd2">of&lt;/span>=/tmp/test &lt;span style="color:#268bd2">bs&lt;/span>=8k &lt;span style="color:#268bd2">count&lt;/span>=&lt;span style="color:#2aa198;font-weight:bold">1000000&lt;/span> 0.40s user 14.10s system -45% cpu -32.143 total
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#cb4b16">time&lt;/span> dd &lt;span style="color:#859900">if&lt;/span>=/tmp/test &lt;span style="color:#268bd2">of&lt;/span>=/dev/null &lt;span style="color:#268bd2">bs&lt;/span>=8k
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records in
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records out
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#2aa198;font-weight:bold">8192000000&lt;/span> bytes (8.2 GB, 7.6 GiB) copied, 11.3272 s, &lt;span style="color:#2aa198;font-weight:bold">723&lt;/span> MB/s
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dd &lt;span style="color:#859900">if&lt;/span>=/tmp/test &lt;span style="color:#268bd2">of&lt;/span>=/dev/null &lt;span style="color:#268bd2">bs&lt;/span>=8k 0.38s user 10.94s system 99% cpu 11.322 total
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
-&lt;li>跨文件系统（文件存放于Windows文件系统中）&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#cb4b16">time&lt;/span> dd &lt;span style="color:#859900">if&lt;/span>=/dev/zero &lt;span style="color:#268bd2">of&lt;/span>=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2">bs&lt;/span>=8k &lt;span style="color:#268bd2">count&lt;/span>=&lt;span style="color:#2aa198;font-weight:bold">1000000&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records in
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records out
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#2aa198;font-weight:bold">8192000000&lt;/span> bytes (8.2 GB, 7.6 GiB) copied, 221.01 s, 37.1 MB/s
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dd &lt;span style="color:#859900">if&lt;/span>=/dev/zero &lt;span style="color:#268bd2">of&lt;/span>=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2">bs&lt;/span>=8k &lt;span style="color:#268bd2">count&lt;/span>=&lt;span style="color:#2aa198;font-weight:bold">1000000&lt;/span> 1.30s user 14.70s system 9% cpu 2:54.32 total
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#cb4b16">time&lt;/span> dd &lt;span style="color:#859900">if&lt;/span>=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2">of&lt;/span>=/dev/null &lt;span style="color:#268bd2">bs&lt;/span>=8k
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records in
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records out
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#2aa198;font-weight:bold">8192000000&lt;/span> bytes (8.2 GB, 7.6 GiB) copied, 256.3 s, 32.0 MB/s
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dd &lt;span style="color:#859900">if&lt;/span>=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2">of&lt;/span>=/dev/null &lt;span style="color:#268bd2">bs&lt;/span>=8k 1.28s user 12.21s system 5% cpu 4:16.30 total
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
-&lt;li>挂载硬盘（文件存放于挂载硬盘的Arch Linux文件系统中）&lt;/li>
-&lt;/ol>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#cb4b16">time&lt;/span> dd &lt;span style="color:#859900">if&lt;/span>=/dev/zero &lt;span style="color:#268bd2">of&lt;/span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2">bs&lt;/span>=8k &lt;span style="color:#268bd2">count&lt;/span>=&lt;span style="color:#2aa198;font-weight:bold">1000000&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records in
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records out
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#2aa198;font-weight:bold">8192000000&lt;/span> bytes (8.2 GB, 7.6 GiB) copied, 10.8812 s, &lt;span style="color:#2aa198;font-weight:bold">753&lt;/span> MB/s
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dd &lt;span style="color:#859900">if&lt;/span>=/dev/zero &lt;span style="color:#268bd2">of&lt;/span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2">bs&lt;/span>=8k 0.30s user 10.58s system 18% cpu 57.570 total
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ &lt;span style="color:#cb4b16">time&lt;/span> dd &lt;span style="color:#859900">if&lt;/span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2">of&lt;/span>=/dev/null &lt;span style="color:#268bd2">bs&lt;/span>=8k
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records in
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1000000+0 records out
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#2aa198;font-weight:bold">8192000000&lt;/span> bytes (8.2 GB, 7.6 GiB) copied, 2.04829 s, 4.0 GB/s
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dd &lt;span style="color:#859900">if&lt;/span>=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2">of&lt;/span>=/dev/null &lt;span style="color:#268bd2">bs&lt;/span>=8k 0.22s user 1.83s system 99% cpu 2.053 total
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看到1和3的效率远高于2，说明WSL2跨文件系统的读写效率确实很烂。而3比1的效率更高，可能是因为我自己买来安装Arch Linux的硬盘比电脑出厂自带的安装Windows的硬盘更好。&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/linux/</link><description>Recent content in Linux on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>在ArchLinux下使用QEMU/KVM和Virt Manager安装Windows虚拟机</title><link>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</link><pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</guid><description>&lt;h2 id="安装系统前的准备"&gt;安装系统前的准备&lt;/h2&gt;
+&lt;p&gt;参考：https://ivonblog.com/posts/archlinux-qemu-virt-manager/&lt;/p&gt;
+&lt;p&gt;安装必要的包&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S qemu-full libvirt virt-manager
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还有一些utils包，缺啥装啥&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S dnsmasq 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动服务&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo systemctl &lt;span style="color:#cb4b16"&gt;enable&lt;/span&gt; --now libvirtd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo virsh net-start default
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo virsh net-autostart default
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;把当前用户加到用户组&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo gpasswd -a &lt;span style="color:#268bd2"&gt;$USER&lt;/span&gt; libvirt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo gpasswd -a &lt;span style="color:#268bd2"&gt;$USER&lt;/span&gt; kvm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="安装windows-10系统"&gt;安装Windows 10系统&lt;/h2&gt;
+&lt;p&gt;参考：https://ivonblog.com/posts/install-windows-11-qemu-kvm-on-linux/&lt;/p&gt;
+&lt;h3 id="问题排查无网络"&gt;问题排查：无网络&lt;/h3&gt;
+&lt;p&gt;我使用的是NAT模式（懒得配置桥接了），网卡选择了virtio模式。问题在于virtio模式也需要安装特定驱动，否则windows上无法识别网卡。&lt;/p&gt;
+&lt;p&gt;DeepSeek表示：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在下载并挂载了virtio-win.iso之后：&lt;/p&gt;
+&lt;p&gt;在Windows中安装驱动​​：打开设备管理器 → 右键未知设备 → 更新驱动程序 → 浏览ISO中的NetKVM目录（根据系统选择w10或w11）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="代理设置"&gt;代理设置&lt;/h2&gt;
+&lt;p&gt;宿主机代理软件开启port sharing，然后通过宿主机运行&lt;code&gt;ip addr&lt;/code&gt;或虚拟机运行&lt;code&gt;ipconfig&lt;/code&gt;获取虚拟机的默认网关，最后在虚拟机设置中填入到代理服务器即可。&lt;/p&gt;
+&lt;h2 id="使用virtiofs共享文件夹"&gt;使用VirtioFS共享文件夹&lt;/h2&gt;
+&lt;p&gt;参考：https://ivonblog.com/posts/libvirt-virtiofs/&lt;/p&gt;
+&lt;h2 id="todo"&gt;TODO&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;窗口分辨率的设置&lt;/li&gt;
+&lt;li&gt;经常用着用着就死机了，好像也没啥好办法 &amp;#x1f607;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>如何在dual-boot下共享Linux与WSL的文件</title><link>https://www.tangda.me/posts/2025-02-15-mount-linux-to-wsl/</link><pubDate>Sat, 15 Feb 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-02-15-mount-linux-to-wsl/</guid><description>&lt;h2 id="动机"&gt;动机&lt;/h2&gt;
+&lt;p&gt;众所周知，WSL2与WSL1相比，最大的劣势就在于跨文件系统的读写效率&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;，所以如果在WSL下进行开发，那么尽量将文件存储于WSL文件系统中。但我的笔记本是双系统，主要工作环境是Arch Linux系统，安装WSL只是预防Arch Linux滚挂的紧急情况。&lt;/p&gt;
+&lt;p&gt;我以前使用的方案是，将所有文件存储在Windows系统中，Arch Linux系统通过挂载硬盘的方式访问，WSL通过跨文件系统的方式访问。这样虽然可以实现一份文件多处共享，但受限于WSL2跨文件系统读写效率低下的问题。&lt;/p&gt;
+&lt;p&gt;因此，在购入新电脑后，我将所有文件存储在Arch Linux系统中，在WSL2中直接挂载Arch Linux系统所在的硬盘，通过挂载硬盘的方式直接访问。至于Windows系统，反正没有配置开发环境，能用编辑器打开代码文件即可。&lt;/p&gt;
+&lt;h2 id="操作流程"&gt;操作流程&lt;/h2&gt;
+&lt;p&gt;参考这两个链接一步一步来即可，具体过程略。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/microsoft/WSL/issues/6073#issuecomment-1774085064"&gt;Is it possible to automount partition/drive using wsl &amp;ndash;mount after restart? · Issue #6073 · microsoft/WSL&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://medium.com/@stefan.berkner/automatically-starting-an-external-encrypted-ssd-in-windows-subsystem-wsl-6403c34e9680"&gt;Automatically Starting an External Encrypted SSD in Windows Subsystem (WSL) | by Stefan Berkner | Medium&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="实验结果"&gt;实验结果&lt;/h2&gt;
+&lt;p&gt;我测试了三种情况下的读写实验结果。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;WSL内部文件系统（文件存放于WSL文件系统中）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/tmp/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#2aa198;font-weight:bold"&gt;8192000000&lt;/span&gt; bytes (8.2 GB, 7.6 GiB) copied, 14.5304 s, &lt;span style="color:#2aa198;font-weight:bold"&gt;564&lt;/span&gt; MB/s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/tmp/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt; 0.40s user 14.10s system -45% cpu -32.143 total
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/tmp/test &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/dev/null &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#2aa198;font-weight:bold"&gt;8192000000&lt;/span&gt; bytes (8.2 GB, 7.6 GiB) copied, 11.3272 s, &lt;span style="color:#2aa198;font-weight:bold"&gt;723&lt;/span&gt; MB/s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/tmp/test &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/dev/null &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k 0.38s user 10.94s system 99% cpu 11.322 total
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start="2"&gt;
+&lt;li&gt;跨文件系统（文件存放于Windows文件系统中）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#2aa198;font-weight:bold"&gt;8192000000&lt;/span&gt; bytes (8.2 GB, 7.6 GiB) copied, 221.01 s, 37.1 MB/s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt; 1.30s user 14.70s system 9% cpu 2:54.32 total
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/dev/null &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#2aa198;font-weight:bold"&gt;8192000000&lt;/span&gt; bytes (8.2 GB, 7.6 GiB) copied, 256.3 s, 32.0 MB/s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/dev/null &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k 1.28s user 12.21s system 5% cpu 4:16.30 total
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start="3"&gt;
+&lt;li&gt;挂载硬盘（文件存放于挂载硬盘的Arch Linux文件系统中）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#2aa198;font-weight:bold"&gt;8192000000&lt;/span&gt; bytes (8.2 GB, 7.6 GiB) copied, 10.8812 s, &lt;span style="color:#2aa198;font-weight:bold"&gt;753&lt;/span&gt; MB/s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k 0.30s user 10.58s system 18% cpu 57.570 total
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/dev/null &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#2aa198;font-weight:bold"&gt;8192000000&lt;/span&gt; bytes (8.2 GB, 7.6 GiB) copied, 2.04829 s, 4.0 GB/s
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/dev/null &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k 0.22s user 1.83s system 99% cpu 2.053 total
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以看到1和3的效率远高于2，说明WSL2跨文件系统的读写效率确实很烂。而3比1的效率更高，可能是因为我自己买来安装Arch Linux的硬盘比电脑出厂自带的安装Windows的硬盘更好。&lt;/p&gt;</description></item></channel></rss>

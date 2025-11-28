@@ -1,95 +1,97 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Debug on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/debug/</link><description>Recent content in Debug on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/debug/index.xml" rel="self" type="application/rss+xml"/><item><title>GitHub Actions卡住的问题</title><link>https://www.tangda.me/posts/2025-07-31-github-actions-stuck/</link><pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-07-31-github-actions-stuck/</guid><description>&lt;h2 id="问题表现">问题表现&lt;/h2>
-&lt;p>这个action一直queued，然后24小时后超时，自动结束。但是我运行其他的action都正常。&lt;/p>
-&lt;p>&lt;img src="./action-failed.png" alt="img">&lt;/p>
-&lt;h2 id="解决方案">解决方案&lt;/h2>
-&lt;ol>
-&lt;li>
-&lt;p>首先把 &lt;code>gh-pages.yml&lt;/code> 文件发给LLM让它分析，它告诉我&lt;/p>
-&lt;blockquote>
-&lt;p>确保使用的运行器标签正确：该工作流使用runs-on: ubuntu-20.04，这是GitHub托管的运行器标准标签，应该可用。但可以尝试更新到ubuntu-latest或ubuntu-22.04，以使用更新的运行器环境。&lt;/p>&lt;/blockquote>
-&lt;/li>
-&lt;li>
-&lt;p>然后去查了一下，发现Available Images里根本没有20.04&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>，原来在今年四月给移除了&lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup>。&lt;/p>
-&lt;p>&lt;img src="./action-images.png" alt="img">&lt;/p>
-&lt;/li>
-&lt;li>
-&lt;p>然后把 &lt;code>gh-pages.yml&lt;/code> 中的 &lt;code>ubuntu-20.04&lt;/code> 改成 &lt;code>ubuntu-latest&lt;/code> 就正常了&lt;/p>
-&lt;p>&lt;a href="https://github.com/ADSWT518/ADSWT518.github.io/commit/80747b2a342414f794d62f68886218a9560e0ff3">chore: update github actions image to ubuntu-latest · ADSWT518/ADSWT518.github.io@80747b2&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;div class="footnotes" role="doc-endnotes">
-&lt;hr>
-&lt;ol>
-&lt;li id="fn:1">
-&lt;p>&lt;a href="https://github.com/actions/runner-images">actions/runner-images: GitHub Actions runner images&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;li id="fn:2">
-&lt;p>&lt;a href="https://github.com/actions/runner-images/pull/11748">Ubuntu 20 Deprecation changes by Prabhatkumar59 · Pull Request #11748 · actions/runner-images&lt;/a>&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
-&lt;/li>
-&lt;/ol>
-&lt;/div></description></item><item><title>用Opam安装Frama-C</title><link>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</link><pubDate>Wed, 14 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</guid><description>&lt;h2 id="系统信息">系统信息&lt;/h2>
-&lt;ul>
-&lt;li>linux&lt;/li>
-&lt;li>gcc 15.1.1&lt;/li>
-&lt;li>opam 2.3.0&lt;/li>
-&lt;/ul>
-&lt;h2 id="问题表现">问题表现&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic">#=== ERROR while compiling why3.1.7.2 =========================================#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># context 2.3.0 | linux/x86_64 | | git+https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># path ~/.opam/frama-c/.opam-switch/build/why3.1.7.2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># command ~/.opam/opam-init/hooks/sandbox.sh build make -j27 all byte&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># exit-code 2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># env-file ~/.opam/log/why3-234433-04074f.env&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># output-file ~/.opam/log/why3-234433-04074f.out&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic">### output ###&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># src/server/cpulimit-unix.c:95:23: error: assignment to ‘__sighandler_t’ {aka ‘void (*)(int)’} from incompatible pointer type ‘void (*)(void)’ [-Wincompatible-pointer-types]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># [...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># src/server/cpulimit-unix.c:45:6: note: ‘wallclock_timelimit_reached’ declared here&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># 45 | void wallclock_timelimit_reached() {&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># | ^~~~~~~~~~~~~~~~~~~~~~~~~~~&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># In file included from src/server/cpulimit-unix.c:22:&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># /usr/include/signal.h:72:16: note: ‘__sighandler_t’ declared here&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># 72 | typedef void (*__sighandler_t) (int);&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># | ^~~~~~~~~~~~~~&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># Ocamlopt src/util/weakhtbl.ml&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># make: *** [Makefile:752: src/server/cpulimit-unix.o] Error 1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># make: *** Waiting for unfinished jobs....&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># Ocamlc src/util/diffmap.mli&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&amp;gt;&amp;lt;&amp;gt; Error report &amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>┌─ The following actions failed
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ λ build why3 1.7.2
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└─
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="报错原因">报错原因&lt;/h2>
-&lt;p>gcc版本太高&lt;/p></description></item><item><title>在ArchLinux下使用QEMU/KVM和Virt Manager安装Windows虚拟机</title><link>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</link><pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</guid><description>&lt;h2 id="安装系统前的准备">安装系统前的准备&lt;/h2>
-&lt;p>参考：https://ivonblog.com/posts/archlinux-qemu-virt-manager/&lt;/p>
-&lt;p>安装必要的包&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo pacman -S qemu-full libvirt virt-manager
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>还有一些utils包，缺啥装啥&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo pacman -S dnsmasq 
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>启动服务&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo systemctl &lt;span style="color:#cb4b16">enable&lt;/span> --now libvirtd
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo virsh net-start default
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo virsh net-autostart default
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>把当前用户加到用户组&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo gpasswd -a &lt;span style="color:#268bd2">$USER&lt;/span> libvirt
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo gpasswd -a &lt;span style="color:#268bd2">$USER&lt;/span> kvm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安装windows-10系统">安装Windows 10系统&lt;/h2>
-&lt;p>参考：https://ivonblog.com/posts/install-windows-11-qemu-kvm-on-linux/&lt;/p>
-&lt;h3 id="问题排查无网络">问题排查：无网络&lt;/h3>
-&lt;p>我使用的是NAT模式（懒得配置桥接了），网卡选择了virtio模式。问题在于virtio模式也需要安装特定驱动，否则windows上无法识别网卡。&lt;/p>
-&lt;p>DeepSeek表示：&lt;/p>
-&lt;blockquote>
-&lt;p>在下载并挂载了virtio-win.iso之后：&lt;/p>
-&lt;p>在Windows中安装驱动​​：打开设备管理器 → 右键未知设备 → 更新驱动程序 → 浏览ISO中的NetKVM目录（根据系统选择w10或w11）。&lt;/p>&lt;/blockquote>
-&lt;h2 id="代理设置">代理设置&lt;/h2>
-&lt;p>宿主机代理软件开启port sharing，然后通过宿主机运行&lt;code>ip addr&lt;/code>或虚拟机运行&lt;code>ipconfig&lt;/code>获取虚拟机的默认网关，最后在虚拟机设置中填入到代理服务器即可。&lt;/p>
-&lt;h2 id="使用virtiofs共享文件夹">使用VirtioFS共享文件夹&lt;/h2>
-&lt;p>参考：https://ivonblog.com/posts/libvirt-virtiofs/&lt;/p>
-&lt;h2 id="todo">TODO&lt;/h2>
-&lt;ul>
-&lt;li>窗口分辨率的设置&lt;/li>
-&lt;li>经常用着用着就死机了，好像也没啥好办法 &amp;#x1f607;&lt;/li>
-&lt;/ul></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Debug on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/debug/</link><description>Recent content in Debug on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/debug/index.xml" rel="self" type="application/rss+xml"/><item><title>GitHub Actions卡住的问题</title><link>https://www.tangda.me/posts/2025-07-31-github-actions-stuck/</link><pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-07-31-github-actions-stuck/</guid><description>&lt;h2 id="问题表现"&gt;问题表现&lt;/h2&gt;
+&lt;p&gt;这个action一直queued，然后24小时后超时，自动结束。但是我运行其他的action都正常。&lt;/p&gt;
+&lt;p&gt;&lt;img src="./action-failed.png" alt="img"&gt;&lt;/p&gt;
+&lt;h2 id="解决方案"&gt;解决方案&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;首先把 &lt;code&gt;gh-pages.yml&lt;/code&gt; 文件发给LLM让它分析，它告诉我&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;确保使用的运行器标签正确：该工作流使用runs-on: ubuntu-20.04，这是GitHub托管的运行器标准标签，应该可用。但可以尝试更新到ubuntu-latest或ubuntu-22.04，以使用更新的运行器环境。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;然后去查了一下，发现Available Images里根本没有20.04&lt;sup id="fnref:1"&gt;&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref"&gt;1&lt;/a&gt;&lt;/sup&gt;，原来在今年四月给移除了&lt;sup id="fnref:2"&gt;&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref"&gt;2&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src="./action-images.png" alt="img"&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;然后把 &lt;code&gt;gh-pages.yml&lt;/code&gt; 中的 &lt;code&gt;ubuntu-20.04&lt;/code&gt; 改成 &lt;code&gt;ubuntu-latest&lt;/code&gt; 就正常了&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ADSWT518/ADSWT518.github.io/commit/80747b2a342414f794d62f68886218a9560e0ff3"&gt;chore: update github actions image to ubuntu-latest · ADSWT518/ADSWT518.github.io@80747b2&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="footnotes" role="doc-endnotes"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;&lt;a href="https://github.com/actions/runner-images"&gt;actions/runner-images: GitHub Actions runner images&lt;/a&gt;&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;&lt;a href="https://github.com/actions/runner-images/pull/11748"&gt;Ubuntu 20 Deprecation changes by Prabhatkumar59 · Pull Request #11748 · actions/runner-images&lt;/a&gt;&amp;#160;&lt;a href="#fnref:2" class="footnote-backref" role="doc-backlink"&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description></item><item><title>用Opam安装Frama-C</title><link>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</link><pubDate>Wed, 14 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</guid><description>&lt;h2 id="系统信息"&gt;系统信息&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;linux&lt;/li&gt;
+&lt;li&gt;gcc 15.1.1&lt;/li&gt;
+&lt;li&gt;opam 2.3.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="问题表现"&gt;问题表现&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#=== ERROR while compiling why3.1.7.2 =========================================#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# context 2.3.0 | linux/x86_64 | | git+https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# path ~/.opam/frama-c/.opam-switch/build/why3.1.7.2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# command ~/.opam/opam-init/hooks/sandbox.sh build make -j27 all byte&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# exit-code 2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# env-file ~/.opam/log/why3-234433-04074f.env&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# output-file ~/.opam/log/why3-234433-04074f.out&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;### output ###&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# src/server/cpulimit-unix.c:95:23: error: assignment to ‘__sighandler_t’ {aka ‘void (*)(int)’} from incompatible pointer type ‘void (*)(void)’ [-Wincompatible-pointer-types]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# [...]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# src/server/cpulimit-unix.c:45:6: note: ‘wallclock_timelimit_reached’ declared here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# 45 | void wallclock_timelimit_reached() {&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# | ^~~~~~~~~~~~~~~~~~~~~~~~~~~&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# In file included from src/server/cpulimit-unix.c:22:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# /usr/include/signal.h:72:16: note: ‘__sighandler_t’ declared here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# 72 | typedef void (*__sighandler_t) (int);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# | ^~~~~~~~~~~~~~&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# Ocamlopt src/util/weakhtbl.ml&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# make: *** [Makefile:752: src/server/cpulimit-unix.o] Error 1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# make: *** Waiting for unfinished jobs....&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# Ocamlc src/util/diffmap.mli&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt; Error report &amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;┌─ The following actions failed
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;│ λ build why3 1.7.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;└─
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="报错原因"&gt;报错原因&lt;/h2&gt;
+&lt;p&gt;gcc版本太高&lt;/p&gt;</description></item><item><title>在ArchLinux下使用QEMU/KVM和Virt Manager安装Windows虚拟机</title><link>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</link><pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</guid><description>&lt;h2 id="安装系统前的准备"&gt;安装系统前的准备&lt;/h2&gt;
+&lt;p&gt;参考：https://ivonblog.com/posts/archlinux-qemu-virt-manager/&lt;/p&gt;
+&lt;p&gt;安装必要的包&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S qemu-full libvirt virt-manager
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还有一些utils包，缺啥装啥&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S dnsmasq 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动服务&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo systemctl &lt;span style="color:#cb4b16"&gt;enable&lt;/span&gt; --now libvirtd
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo virsh net-start default
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo virsh net-autostart default
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;把当前用户加到用户组&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo gpasswd -a &lt;span style="color:#268bd2"&gt;$USER&lt;/span&gt; libvirt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo gpasswd -a &lt;span style="color:#268bd2"&gt;$USER&lt;/span&gt; kvm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="安装windows-10系统"&gt;安装Windows 10系统&lt;/h2&gt;
+&lt;p&gt;参考：https://ivonblog.com/posts/install-windows-11-qemu-kvm-on-linux/&lt;/p&gt;
+&lt;h3 id="问题排查无网络"&gt;问题排查：无网络&lt;/h3&gt;
+&lt;p&gt;我使用的是NAT模式（懒得配置桥接了），网卡选择了virtio模式。问题在于virtio模式也需要安装特定驱动，否则windows上无法识别网卡。&lt;/p&gt;
+&lt;p&gt;DeepSeek表示：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在下载并挂载了virtio-win.iso之后：&lt;/p&gt;
+&lt;p&gt;在Windows中安装驱动​​：打开设备管理器 → 右键未知设备 → 更新驱动程序 → 浏览ISO中的NetKVM目录（根据系统选择w10或w11）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="代理设置"&gt;代理设置&lt;/h2&gt;
+&lt;p&gt;宿主机代理软件开启port sharing，然后通过宿主机运行&lt;code&gt;ip addr&lt;/code&gt;或虚拟机运行&lt;code&gt;ipconfig&lt;/code&gt;获取虚拟机的默认网关，最后在虚拟机设置中填入到代理服务器即可。&lt;/p&gt;
+&lt;h2 id="使用virtiofs共享文件夹"&gt;使用VirtioFS共享文件夹&lt;/h2&gt;
+&lt;p&gt;参考：https://ivonblog.com/posts/libvirt-virtiofs/&lt;/p&gt;
+&lt;h2 id="todo"&gt;TODO&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;窗口分辨率的设置&lt;/li&gt;
+&lt;li&gt;经常用着用着就死机了，好像也没啥好办法 &amp;#x1f607;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

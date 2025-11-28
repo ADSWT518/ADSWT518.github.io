@@ -1,37 +1,37 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Opam on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/opam/</link><description>Recent content in Opam on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Wed, 14 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/opam/index.xml" rel="self" type="application/rss+xml"/><item><title>用Opam安装Frama-C</title><link>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</link><pubDate>Wed, 14 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</guid><description>&lt;h2 id="系统信息">系统信息&lt;/h2>
-&lt;ul>
-&lt;li>linux&lt;/li>
-&lt;li>gcc 15.1.1&lt;/li>
-&lt;li>opam 2.3.0&lt;/li>
-&lt;/ul>
-&lt;h2 id="问题表现">问题表现&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic">#=== ERROR while compiling why3.1.7.2 =========================================#&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># context 2.3.0 | linux/x86_64 | | git+https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># path ~/.opam/frama-c/.opam-switch/build/why3.1.7.2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># command ~/.opam/opam-init/hooks/sandbox.sh build make -j27 all byte&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># exit-code 2&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># env-file ~/.opam/log/why3-234433-04074f.env&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># output-file ~/.opam/log/why3-234433-04074f.out&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic">### output ###&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># src/server/cpulimit-unix.c:95:23: error: assignment to ‘__sighandler_t’ {aka ‘void (*)(int)’} from incompatible pointer type ‘void (*)(void)’ [-Wincompatible-pointer-types]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># [...]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># src/server/cpulimit-unix.c:45:6: note: ‘wallclock_timelimit_reached’ declared here&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># 45 | void wallclock_timelimit_reached() {&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># | ^~~~~~~~~~~~~~~~~~~~~~~~~~~&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># In file included from src/server/cpulimit-unix.c:22:&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># /usr/include/signal.h:72:16: note: ‘__sighandler_t’ declared here&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># 72 | typedef void (*__sighandler_t) (int);&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># | ^~~~~~~~~~~~~~&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># Ocamlopt src/util/weakhtbl.ml&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># make: *** [Makefile:752: src/server/cpulimit-unix.o] Error 1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># make: *** Waiting for unfinished jobs....&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#93a1a1;font-style:italic"># Ocamlc src/util/diffmap.mli&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&amp;gt;&amp;lt;&amp;gt; Error report &amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>┌─ The following actions failed
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ λ build why3 1.7.2
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└─
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="报错原因">报错原因&lt;/h2>
-&lt;p>gcc版本太高&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Opam on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/opam/</link><description>Recent content in Opam on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Wed, 14 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/opam/index.xml" rel="self" type="application/rss+xml"/><item><title>用Opam安装Frama-C</title><link>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</link><pubDate>Wed, 14 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-14-opam-install-why3/</guid><description>&lt;h2 id="系统信息"&gt;系统信息&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;linux&lt;/li&gt;
+&lt;li&gt;gcc 15.1.1&lt;/li&gt;
+&lt;li&gt;opam 2.3.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="问题表现"&gt;问题表现&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#=== ERROR while compiling why3.1.7.2 =========================================#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# context 2.3.0 | linux/x86_64 | | git+https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# path ~/.opam/frama-c/.opam-switch/build/why3.1.7.2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# command ~/.opam/opam-init/hooks/sandbox.sh build make -j27 all byte&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# exit-code 2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# env-file ~/.opam/log/why3-234433-04074f.env&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# output-file ~/.opam/log/why3-234433-04074f.out&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;### output ###&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# src/server/cpulimit-unix.c:95:23: error: assignment to ‘__sighandler_t’ {aka ‘void (*)(int)’} from incompatible pointer type ‘void (*)(void)’ [-Wincompatible-pointer-types]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# [...]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# src/server/cpulimit-unix.c:45:6: note: ‘wallclock_timelimit_reached’ declared here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# 45 | void wallclock_timelimit_reached() {&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# | ^~~~~~~~~~~~~~~~~~~~~~~~~~~&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# In file included from src/server/cpulimit-unix.c:22:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# /usr/include/signal.h:72:16: note: ‘__sighandler_t’ declared here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# 72 | typedef void (*__sighandler_t) (int);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# | ^~~~~~~~~~~~~~&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# Ocamlopt src/util/weakhtbl.ml&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# make: *** [Makefile:752: src/server/cpulimit-unix.o] Error 1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# make: *** Waiting for unfinished jobs....&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# Ocamlc src/util/diffmap.mli&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt; Error report &amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;&amp;lt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;┌─ The following actions failed
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;│ λ build why3 1.7.2
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;└─
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="报错原因"&gt;报错原因&lt;/h2&gt;
+&lt;p&gt;gcc版本太高&lt;/p&gt;</description></item></channel></rss>
