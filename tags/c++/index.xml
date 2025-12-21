@@ -3,9 +3,9 @@
 &lt;/blockquote&gt;
 &lt;p&gt;如果想在定义对象时可以指定初值也可以不指定，可以在类中设计一个带默认值的构造函数。下面这个程序：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-cpp" data-lang="cpp"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;//文件：main.cpp
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;#34;example.h&amp;#34;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;#34;example.h&amp;#34;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;&lt;span style="color:#859900"&gt;using&lt;/span&gt; &lt;span style="color:#859900"&gt;namespace&lt;/span&gt; &lt;span style="color:#268bd2"&gt;std&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#859900"&gt;using&lt;/span&gt; &lt;span style="color:#859900"&gt;namespace&lt;/span&gt; &lt;span style="color:#268bd2"&gt;std&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#859900;font-weight:bold"&gt;int&lt;/span&gt; &lt;span style="color:#268bd2"&gt;main&lt;/span&gt;()
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
@@ -16,9 +16,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;//文件：example.h
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#ifndef EXAMPLE_H_INCLUDED
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#ifndef EXAMPLE_H_INCLUDED
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#define EXAMPLE_H_INCLUDED
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#859900"&gt;class&lt;/span&gt; &lt;span style="color:#cb4b16"&gt;hello&lt;/span&gt;{
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#859900"&gt;private&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#859900;font-weight:bold"&gt;int&lt;/span&gt; &lt;span style="color:#268bd2"&gt;b&lt;/span&gt;;
@@ -27,11 +27,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#859900;font-weight:bold"&gt;void&lt;/span&gt; &lt;span style="color:#268bd2"&gt;print&lt;/span&gt;();
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;};
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#endif &lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;// EXAMPLE_H_INCLUDED
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;//文件：example.cpp
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;#34;example.h&amp;#34;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;#34;example.h&amp;#34;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;&lt;span style="color:#859900"&gt;using&lt;/span&gt; &lt;span style="color:#859900"&gt;namespace&lt;/span&gt; &lt;span style="color:#268bd2"&gt;std&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#859900"&gt;using&lt;/span&gt; &lt;span style="color:#859900"&gt;namespace&lt;/span&gt; &lt;span style="color:#268bd2"&gt;std&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#268bd2"&gt;hello&lt;/span&gt;::&lt;span style="color:#268bd2"&gt;hello&lt;/span&gt;(&lt;span style="color:#859900;font-weight:bold"&gt;int&lt;/span&gt; &lt;span style="color:#268bd2"&gt;c&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#268bd2"&gt;b&lt;/span&gt; = &lt;span style="color:#268bd2"&gt;c&lt;/span&gt;;
@@ -46,13 +46,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;是因为我们定义的构造函数必须要指定初值&lt;/p&gt;
 &lt;p&gt;而如果把类的执行文件改成这样：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-cpp" data-lang="cpp"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;//文件：example.cpp
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;#34;example.h&amp;#34;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;#34;example.h&amp;#34;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;&lt;span style="color:#859900"&gt;using&lt;/span&gt; &lt;span style="color:#859900"&gt;namespace&lt;/span&gt; &lt;span style="color:#268bd2"&gt;std&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#859900"&gt;using&lt;/span&gt; &lt;span style="color:#859900"&gt;namespace&lt;/span&gt; &lt;span style="color:#268bd2"&gt;std&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#268bd2"&gt;hello&lt;/span&gt;::&lt;span style="color:#268bd2"&gt;hello&lt;/span&gt;(&lt;span style="color:#859900;font-weight:bold"&gt;int&lt;/span&gt; &lt;span style="color:#268bd2"&gt;c&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;0&lt;/span&gt;)&lt;span style="color:#93a1a1;font-style:italic"&gt;//加上了一个默认值
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#268bd2"&gt;b&lt;/span&gt; = &lt;span style="color:#268bd2"&gt;c&lt;/span&gt;;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;

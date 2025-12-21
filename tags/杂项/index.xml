@@ -4,7 +4,7 @@
 &lt;p&gt;这个博客就用来记录我的生活和思考吧，也会写一些学习的知识。&lt;/p&gt;
 &lt;p&gt;希望看到这里的人，一切顺利！&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-cpp" data-lang="cpp"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#include&lt;/span&gt; &lt;span style="color:#93a1a1;font-style:italic"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#859900;font-weight:bold"&gt;int&lt;/span&gt; &lt;span style="color:#268bd2"&gt;main&lt;/span&gt;()
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#268bd2"&gt;std&lt;/span&gt;::&lt;span style="color:#268bd2"&gt;cout&lt;/span&gt; &amp;lt;&amp;lt; &lt;span style="color:#2aa198"&gt;&amp;#34;Hello, world!&lt;/span&gt;&lt;span style="color:#2aa198"&gt;\n&lt;/span&gt;&lt;span style="color:#2aa198"&gt;Welcome to my blog!&amp;#34;&lt;/span&gt;;
