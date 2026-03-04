@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Yazhou Tang (唐亚周)</title><link>https://www.tangda.me/tags/linux/</link><description>Recent content in Linux on Yazhou Tang (唐亚周)</description><generator>Hugo</generator><language>en-us</language><copyright>© Yazhou Tang</copyright><lastBuildDate>Fri, 09 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.tangda.me/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>在ArchLinux下使用QEMU/KVM和Virt Manager安装Windows虚拟机</title><link>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</link><pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate><guid>https://www.tangda.me/posts/2025-05-09-libvirt-install-windows/</guid><description>&lt;h2 id="安装系统前的准备"&gt;安装系统前的准备&lt;/h2&gt;
 &lt;p&gt;参考：https://ivonblog.com/posts/archlinux-qemu-virt-manager/&lt;/p&gt;
 &lt;p&gt;安装必要的包&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S qemu-full libvirt virt-manager
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S qemu-full libvirt virt-manager
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还有一些utils包，缺啥装啥&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S dnsmasq 
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo pacman -S dnsmasq 
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;启动服务&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo systemctl &lt;span style="color:#cb4b16"&gt;enable&lt;/span&gt; --now libvirtd
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo systemctl &lt;span style="color:#cb4b16"&gt;enable&lt;/span&gt; --now libvirtd
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo virsh net-start default
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo virsh net-autostart default
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;把当前用户加到用户组&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo gpasswd -a &lt;span style="color:#268bd2"&gt;$USER&lt;/span&gt; libvirt
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo gpasswd -a &lt;span style="color:#268bd2"&gt;$USER&lt;/span&gt; libvirt
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo gpasswd -a &lt;span style="color:#268bd2"&gt;$USER&lt;/span&gt; kvm
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="安装windows-10系统"&gt;安装Windows 10系统&lt;/h2&gt;
 &lt;p&gt;参考：https://ivonblog.com/posts/install-windows-11-qemu-kvm-on-linux/&lt;/p&gt;
@@ -41,7 +41,7 @@
 &lt;ol&gt;
 &lt;li&gt;WSL内部文件系统（文件存放于WSL文件系统中）&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/tmp/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/tmp/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
@@ -57,7 +57,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start="2"&gt;
 &lt;li&gt;跨文件系统（文件存放于Windows文件系统中）&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/c/Users/tangy/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out
@@ -73,7 +73,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start="3"&gt;
 &lt;li&gt;挂载硬盘（文件存放于挂载硬盘的Arch Linux文件系统中）&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ &lt;span style="color:#cb4b16"&gt;time&lt;/span&gt; dd &lt;span style="color:#859900"&gt;if&lt;/span&gt;=/dev/zero &lt;span style="color:#268bd2"&gt;of&lt;/span&gt;=/mnt/wsl/PHYSICALDRIVE1p3/@home/adswt518/test &lt;span style="color:#268bd2"&gt;bs&lt;/span&gt;=8k &lt;span style="color:#268bd2"&gt;count&lt;/span&gt;=&lt;span style="color:#2aa198;font-weight:bold"&gt;1000000&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records in
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1000000+0 records out

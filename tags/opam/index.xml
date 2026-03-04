@@ -5,7 +5,7 @@
 &lt;li&gt;opam 2.3.0&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="问题表现"&gt;问题表现&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#=== ERROR while compiling why3.1.7.2 =========================================#&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;#=== ERROR while compiling why3.1.7.2 =========================================#&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# context 2.3.0 | linux/x86_64 | | git+https://mirrors.sjtug.sjtu.edu.cn/git/opam-repository.git&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# path ~/.opam/frama-c/.opam-switch/build/why3.1.7.2&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#93a1a1;font-style:italic"&gt;# command ~/.opam/opam-init/hooks/sandbox.sh build make -j27 all byte&lt;/span&gt;
